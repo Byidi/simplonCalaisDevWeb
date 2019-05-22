@@ -1,0 +1,30 @@
+.div{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.div h2{
+    flex: 0 1 100%;
+    font-family: sans-serif;
+    text-transform: uppercase;
+}
+
+.div h2 span{
+    background-color:red;
+}
+
+.div img{
+    flex: 0 0 200px;
+}
+.div p{
+    flex: 1 1 200px;
+}
+
+#div6{
+    width: 30%;
+    position: fixed;
+    top: 0;
+    right:0;
+}

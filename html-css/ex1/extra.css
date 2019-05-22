@@ -1,0 +1,72 @@
+.div_200_x_200{
+    width: 200px;
+    height: 200px;
+}
+
+#background_repeat{
+    background-image: url('./images/background1.png');
+    background-repeat: repeat;
+}
+
+#background_ajust{
+    background-image: url('./images/background2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#background_position{
+    background-image: url('./images/background3.png');
+    background-position: bottom right;
+}
+
+#damier tr{
+    height: 100px;
+}
+
+#damier td{
+    width: 100px;
+}
+
+#damier tr:nth-child(even) td:nth-child(odd), #damier tr:nth-child(odd) td:nth-child(even){
+    background-color: black;
+}
+
+#hover:hover, #active:active{
+    background-color: blue;
+    color: white;
+}
+
+#active_and_hover:hover{
+    background-color: lightblue;
+}
+
+#active_and_hover:active{
+    background-color: darkblue;
+    transition: background-color 2s;
+}
+
+.extra5{
+    background-image: url('./images/psy.png');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#div_transparente{
+    background-color: red;
+    opacity: .5;
+}
+
+#liste_sans_puce{
+    list-style-type: none;
+}
+
+#liste_sans_puce a{
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+}

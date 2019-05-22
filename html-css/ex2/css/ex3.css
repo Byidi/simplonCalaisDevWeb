@@ -1,0 +1,18 @@
+body{
+    background-color: #222222;
+}
+
+.titre{
+    color: yellow;
+    text-align: center;
+}
+
+.image{
+    width: 50%;
+    float: left;
+}
+
+.texte{
+    width: 50%;
+    float: right;
+}

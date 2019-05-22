@@ -1,0 +1,55 @@
+body{
+    background-image: url('../cours1/img.png');
+    background-size: cover;
+}
+
+#titre_important{
+    text-transform: uppercase;
+    color: red;
+}
+
+#liste_a_puce_carre{
+    list-style-type: square;
+}
+
+#super_tableau{
+    border : 2px solid royalblue;
+    text-align: center;
+}
+
+#super_tableau thead{
+    background: lavender;
+}
+
+#super_tableau th, #super_tableau tr{
+    height: 50px;
+}
+
+#super_tableau td{
+    width: 200px;
+}
+
+#div_transparente{
+    width: 600px;
+    height: 400px;
+    background-color: rgba(0,0,0,.5);
+}
+
+.div_200_x_200{
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#arrondi_50_pixel{
+    border-radius: 50px
+}
+
+#arrondi_50_pourcent{
+    border-radius: 50%;
+}
+
+#arrondi_complex{
+    border-radius: 15px 6% 50px 50px;
+}

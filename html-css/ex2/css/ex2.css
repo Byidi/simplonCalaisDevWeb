@@ -1,0 +1,12 @@
+.liste li:nth-child(2), .liste li:nth-child(4){
+    list-style-type: none;
+}
+
+.liste li:nth-child(2):before, .liste li:nth-child(4):before{
+    content: '\25AA';
+    color: green;
+    display: inline-block;
+    font-size: 12px;
+    width: 1.2em;
+    margin-left: -1.2em;
+}

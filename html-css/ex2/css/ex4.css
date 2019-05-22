@@ -1,0 +1,14 @@
+.tableau{
+    border: 2px solid #F5F5DC;
+    background-color: white;
+}
+
+.tableau thead{
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+}
+
+.tableau tbody tr:nth-child(even){
+    background-color: #F5F5DC;
+}
