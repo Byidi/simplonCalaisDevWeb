@@ -101,8 +101,8 @@ div{
 
 .ball{
     border: none;
-    width:10vh;
-    height:10vh;
+    width:5vh;
+    height:5vh;
     background-image: url('../image/ball.png');
     background-size: contain;
     position: absolute;
@@ -110,16 +110,16 @@ div{
     left: 50%;
     transform: translate(-50%, -50%);
     animation-name: rebond;
-    animation-duration: 2s;
+    animation-duration: 5s;
 }
 
 @keyframes rebond {
-  0% {width: 40vh;height: 40vh;}
-  30% {width: 10vh;height: 10vh;}
-  60% {width: 15vh;height: 15vh;}
-  80% {width: 10vh;height: 10vh;}
-  90% {width: 12vh;height: 12vh;}
-  95% {width: 10vh;height: 10vh;}
-  97% {width: 11vh;height: 11vh;}
-  100% {width: 10vh;height: 10vh;}
+  0% {width: 35vh;height: 35vh;}
+  30% {width: 5vh;height: 5vh;}
+  60% {width: 10vh;height: 10vh;}
+  80% {width: 5vh;height: 5vh;}
+  90% {width: 7vh;height: 7vh;}
+  95% {width: 5vh;height: 5vh;}
+  97% {width: 6vh;height: 6vh;}
+  100% {width: 5vh;height: 5vh;}
 }
