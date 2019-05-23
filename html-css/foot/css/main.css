@@ -15,14 +15,25 @@ div{
     border: 1px solid #FFFFFF;
 }
 
+.terrain{
+    width: 90vw;
+    height: 90vh;
+    border-width: 0;
+    position: absolute;
+    top: 5vh;
+    left: 5vw;
+    z-index: 1;
+}
+
 .contour{
-    width: 48vw;
-    height: 96vh;
+    width: 45vw;
+    height: 90vh;
     border-width: 1px;
     border-right-width: 1px;
-    position: relative;
-    top: 10px;
-    left: 2vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
 .milieu_cercle{
@@ -109,11 +120,20 @@ div{
     background-color: #FFFFFF;
 }
 
+.surface .but{
+    height: 15vh;
+    width: 2vw;
+    position: absolute;
+    top: 50%;
+    left: -2vw;
+    transform: translateY(-50%);
+    border-right-width: 0px;
+}
+
 .contour.right{
     position: absolute;
-    top: 10px;
-    right: 2vw;
-    left:auto;
+    right: 0;
+    left: auto;
     transform: rotateY(180deg);
 }
 
@@ -129,6 +149,7 @@ div{
     transform: translate(-50%, -50%);
     animation-name: rebond;
     animation-duration: 5s;
+    z-index: 999;
 }
 
 @keyframes rebond {
