@@ -1,14 +1,14 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body{
-    background-image: url('../image/field.jpg');
-    background-repeat: repeat;
     width: 100vw;
     height: 100vh;
-    display: flex;
+    background-image: url('../image/field.jpg');
+    background-repeat: repeat;
 }
 
 div{
@@ -16,94 +16,128 @@ div{
 }
 
 .contour{
-    width: 95vw;
-    height: 95vh;
-    margin: auto;
-}
-
-.milieu{
-    border-width: 0px 1px 0px 0px;
-    width: 0px;
-    height: 100%;
-    margin: auto;
+    width: 48vw;
+    height: 96vh;
+    border-width: 1px;
+    border-right-width: 1px;
+    position: relative;
+    top: 10px;
+    left: 2vw;
 }
 
 .milieu_cercle{
-    width: 35vh;
-    height: 35vh;
-    border-radius: 50%;
+    width: 10vh;
+    height: 20vh;
     position: absolute;
-    top: 32.5vh;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    border-radius: 20vh 0 0 20vh;
+    border-right: 0px;
 }
 
-.milieu_dot{
+.milieu_cercle .point{
     width: 1vh;
-    height: 1vh;
-    border-radius: 50%;
+    height: 2vh;
     position: absolute;
-    top: 49.5vh;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    border-radius: 2vh 0 0 2vh;
+    border-right: 0px;
     background-color: #FFFFFF;
+}
+
+.corner{
+    width: 5vh;
+    height: 5vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0 0 20vh 0;
+    border-width: 0px 1px 1px 0px;
+}
+
+.corner.bottom{
+    top: 100%;
+    left: 0;
+    border-radius: 0 5vh 0 0;
+    border-width: 1px 1px 0px 0px;
+    transform: translate(0, -100%);
 }
 
 .surface{
     width: 10vw;
     height: 50vh;
     position: absolute;
-    top: 25vh;
-}
-
-.surface_left{
-    left: 2.5vw;
+    top: 50%;
+    left: 0vw;
+    transform: translateY(-50%);
     border-left: 0px;
 }
 
-.surface_right{
-    right: 2.5vw;
-    border-right: 0px;
-}
-
-.surface_mini{
+.surface .mini{
     height: 25vh;
     width: 4vw;
-    top: 37.5vh;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    border-left: 0px;
 }
 
-.surface_cercle{
+.surface .cercle{
     width: 10vh;
     height: 20vh;
     position: absolute;
-    top: 40vh;
-}
-
-.surface_cercle_left{
-    left: 12.5vw;
+    top: 50%;
+    right: -10.3vh;
+    transform: translateY(-50%);
     border-radius: 0 20vh 20vh 0;
     border-left: 0px;
 }
 
-.surface_cercle_right{
-    right: 12.5vw;
-    border-radius: 20vh 0 0 20vh;
-    border-right: 0px;
-}
-
 .penalty{
-    width: 1vh;
-    height: 1vh;
+    width: 1.5vh;
+    height: 1.5vh;
     border-radius: 50%;
     position: absolute;
-    top: 49.5vh;
+    top: 50%;
+    left: 70%;
+    transform: translateY(-50%);
+    border: 0;
     background-color: #FFFFFF;
 }
 
-.penalty_left{
-    left: 23vh;
+.contour.right{
+    position: absolute;
+    top: 10px;
+    right: 2vw;
+    left:auto;
+    transform: rotateY(180deg);
 }
 
-.penalty_right{
-    right: 23vh;
+.ball{
+    border: none;
+    width:5vh;
+    height:5vh;
+    background-image: url('../image/ball.png');
+    background-size: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-name: rebond;
+    animation-duration: 5s;
+}
+
+@keyframes rebond {
+  0% {width: 35vh;height: 35vh;}
+  30% {width: 5vh;height: 5vh;}
+  60% {width: 10vh;height: 10vh;}
+  80% {width: 5vh;height: 5vh;}
+  90% {width: 7vh;height: 7vh;}
+  95% {width: 5vh;height: 5vh;}
+  97% {width: 6vh;height: 6vh;}
+  100% {width: 5vh;height: 5vh;}
 }
