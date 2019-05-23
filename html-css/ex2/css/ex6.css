@@ -13,6 +13,7 @@ body{
     background: #330033;
     padding-left: 50px;
     height: 10vh;
+    text-align: center;
 }
 
 .nav a{
@@ -22,6 +23,7 @@ body{
     padding-top: 40px;
     height: 60px;
     text-decoration: none;
+    outline: none;
 }
 
 .nav a:hover{
