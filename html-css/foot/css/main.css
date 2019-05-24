@@ -37,42 +37,42 @@ div{
 }
 
 .milieu_cercle{
-    width: 10vh;
-    height: 20vh;
+    width: 10vmin;
+    height: 20vmin;
     position: absolute;
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    border-radius: 20vh 0 0 20vh;
+    border-radius: 20vmin 0 0 20vmin;
     border-right: 0px;
 }
 
 .milieu_cercle .point{
-    width: 1vh;
-    height: 2vh;
+    width: 1vmin;
+    height: 2vmin;
     position: absolute;
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    border-radius: 2vh 0 0 2vh;
+    border-radius: 2vmin 0 0 2vmin;
     border-right: 0px;
     background-color: #FFFFFF;
 }
 
 .corner{
-    width: 5vh;
-    height: 5vh;
+    width: 5vmin;
+    height: 5vmin;
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: 0 0 20vh 0;
+    border-radius: 0 0 5vmin 0;
     border-width: 0px 1px 1px 0px;
 }
 
 .corner.bottom{
     top: 100%;
     left: 0;
-    border-radius: 0 5vh 0 0;
+    border-radius: 0 5vmin 0 0;
     border-width: 1px 1px 0px 0px;
     transform: translate(0, -100%);
 }
@@ -98,19 +98,19 @@ div{
 }
 
 .surface .cercle{
-    width: 10vh;
-    height: 20vh;
+    width: 10vmin;
+    height: 20vmin;
     position: absolute;
     top: 50%;
     right: -10.3vh;
     transform: translateY(-50%);
-    border-radius: 0 20vh 20vh 0;
+    border-radius: 0 20vmin 20vmin 0;
     border-left: 0px;
 }
 
 .penalty{
-    width: 1.5vh;
-    height: 1.5vh;
+    width: 1.5vmin;
+    height: 1.5vmin;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -139,8 +139,8 @@ div{
 
 .ball{
     border: none;
-    width:5vh;
-    height:5vh;
+    width:5vmin;
+    height:5vmin;
     background-image: url('../image/ball.png');
     background-size: contain;
     position: absolute;
@@ -153,12 +153,12 @@ div{
 }
 
 @keyframes rebond {
-  0% {width: 35vh;height: 35vh;}
-  30% {width: 5vh;height: 5vh;}
-  60% {width: 10vh;height: 10vh;}
-  80% {width: 5vh;height: 5vh;}
-  90% {width: 7vh;height: 7vh;}
-  95% {width: 5vh;height: 5vh;}
-  97% {width: 6vh;height: 6vh;}
-  100% {width: 5vh;height: 5vh;}
+  0% {width: 35vmin;height: 35vmin;}
+  30% {width: 5vmin;height: 5vmin;}
+  60% {width: 10vmin;height: 10vmin;}
+  80% {width: 5vmin;height: 5vmin;}
+  90% {width: 7vmin;height: 7vmin;}
+  95% {width: 5vmin;height: 5vmin;}
+  97% {width: 6vmin;height: 6vmin;}
+  100% {width: 5vmin;height: 5vmin;}
 }
