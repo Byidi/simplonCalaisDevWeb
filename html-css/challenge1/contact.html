@@ -4,55 +4,64 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="./css/font.css">
         <link rel="stylesheet" href="./css/main.css">
-        <title> - Services</title>
+        <title> L'horlogerie d'Olivier - Services</title>
     </head>
     <body>
         <header id="topMenu">
-            <div class="logo"></div>
+            <a href="./index.html" class="logo"></a>
             <nav class="menu">
                 <a href="./index.html">Accueil</a>
                 <a href="./services.html">Services</a>
                 <a href="./a-propos.html">A&nbsp;propos</a>
-                <a href="./contact.html">Contact</a>
+                <a class="select" href="./contact.html">Contact</a>
             </nav>
         </header>
         <div id="contact">
             <h1 class="title">Nous contacter</h1>
             <div class="flex">
                 <div class="left">
+                    <div class="background"></div>
                     <form action="index.html" method="post">
                         <div>
-                            <input type="text" name="nom" pattern="[A-Za-z-']+" value="" placeholder=" NOM" />
-                            <span class="error">Valeur non valide.</span>
+                            <input class="tt" type="text" name="nom" pattern="[A-Za-z-'\s]+" value="" placeholder=" NOM" required/>
+                            <span class="error"></span>
                         </div>
                         <div>
                             <input type="text" name="prenom" pattern="[A-Za-z-']+" value="" placeholder=" PRENOM" required/>
-                            <div class="error">Valeur non valide.</div>
+                            <div class="error"></div>
                         </div>
                         <div>
-                            <input type="email" name="nom" value="" placeholder=" EMAIL"/>
-                            <div class="error">Valeur non valide.</div>
+                            <input type="email" name="email" value="" pattern="[a-z]+@[a-z]+\.[a-z]{2,}" placeholder=" EMAIL" required/>
+                            <div class="error"></div>
                         </div>
                         <div>
                             <input type="tel" name="nom" value="" pattern="\+?[0-9]+" placeholder=" TELEPHONE"/>
-                            <div class="error">Valeur non valide.</div>
+                            <div class="error"></div>
                         </div>
                         Votre message : <br/>
                         <textarea name="msg"></textarea>
                     </form>
                 </div>
                 <div class="right">
+                    <div class="background"></div>
                     <div class="map">
 
                     </div>
-                    <p class="nom">Olivier</p>
-                    <p class="adress">1 rue machin bidule</p>
-                    <p class="tel">01 02 03 04 05</p>
+                    <div>
+                        <p class="nom">Olivier</p>
+                        <p class="adress">1 rue machin bidule</p>
+                        <p class="tel">01 02 03 04 05</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div id="footer">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+            <p>Copyright (c) 2019 Copyright Holder All Rights Reserved.</p>
+            <div class="social">
+                <a href="http://twitter.com" class="twitter"></a>
+                <a href="http://facebook.com" class="facebook"></a>
+                <a href="http://instagram.com" class="instagram"></a>
+            </div>
         </div>
     </body>
 </html>
