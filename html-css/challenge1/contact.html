@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="./css/font.css">
         <link rel="stylesheet" href="./css/main.css">
-        <title> - Contact</title>
+        <title> - Services</title>
     </head>
     <body>
         <header id="topMenu">
@@ -17,10 +17,42 @@
             </nav>
         </header>
         <div id="contact">
+            <h1 class="title">Nous contacter</h1>
+            <div class="flex">
+                <div class="left">
+                    <form action="index.html" method="post">
+                        <div>
+                            <input type="text" name="nom" pattern="[A-Za-z-']+" value="" placeholder=" NOM" />
+                            <span class="error">Valeur non valide.</span>
+                        </div>
+                        <div>
+                            <input type="text" name="prenom" pattern="[A-Za-z-']+" value="" placeholder=" PRENOM" required/>
+                            <div class="error">Valeur non valide.</div>
+                        </div>
+                        <div>
+                            <input type="email" name="nom" value="" placeholder=" EMAIL"/>
+                            <div class="error">Valeur non valide.</div>
+                        </div>
+                        <div>
+                            <input type="tel" name="nom" value="" pattern="\+?[0-9]+" placeholder=" TELEPHONE"/>
+                            <div class="error">Valeur non valide.</div>
+                        </div>
+                        Votre message : <br/>
+                        <textarea name="msg"></textarea>
+                    </form>
+                </div>
+                <div class="right">
+                    <div class="map">
 
+                    </div>
+                    <p class="nom">Olivier</p>
+                    <p class="adress">1 rue machin bidule</p>
+                    <p class="tel">01 02 03 04 05</p>
+                </div>
+            </div>
         </div>
-        <footer id="footer">
+        <div id="footer">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-        </footer>
+        </div>
     </body>
 </html>

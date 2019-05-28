@@ -1,0 +1,32 @@
+.flex1{
+    display: flex;
+    height: 300px;
+    flex-direction: row; /* ROW : En ligne, COLUMN : en colone */
+    flex-wrap: wrap;
+    /* justify-content: center;
+    align-items: center; */
+}
+
+.red{
+    flex: 0 0 400px;
+    background-color: red;
+    align-self: flex-end;
+}
+
+.blue{
+    flex: 1 0 50px;
+    background-color: blue;
+}
+
+.green{
+    flex: 1 0 50px;
+    background-color: green;
+}
+
+.orange{
+    background-color: orange;
+}
+
+.item{
+    height: 50px;
+}
