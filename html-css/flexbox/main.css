@@ -1,25 +1,29 @@
 .flex div{
     width: 100px;
-    height: 100px;
+    height: 400px;
 }
 
+/* flexbox orange */
 .flex{
     background-color: orange;
-    height: 300px;
-    width : 90vw;
     margin: auto;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-
-
+/* bloc rouge */
 .red{
+    flex-grow: 3;
     background-color: red;
 }
-
+/* bloc bleu */
 .blue{
+    flex-grow: 1;
     background-color: blue;
 }
-
+/* bloc vert */
 .green{
+    flex-grow: 1;
     background-color: green;
 }

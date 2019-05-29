@@ -510,7 +510,7 @@ body #accueil{
 }
 
 #contact input:placeholder-shown:invalid + .error::after{
-    content: "Champs obligatoire2";
+    content: "Champs obligatoire";
 }
 
 #contact input:valid + .error::after{
@@ -524,6 +524,18 @@ body #accueil{
     height: 30vh;
     padding: 2px;
     margin-bottom: 20px;
+}
+
+#contact .flex .right .coord{
+    background-color: rgba(55,55,55, .8);
+    padding: 20px 20px 10px 20px;
+    border: 3px double #DCD0C0;
+}
+
+#contact .flex .right .coord p{
+    color: #C0B283;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 #contact .map iframe{
