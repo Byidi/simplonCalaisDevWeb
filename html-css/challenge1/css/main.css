@@ -430,9 +430,14 @@ body #accueil{
     justify-content: space-around;
     align-items: center;
     background-color: rgba(255, 255, 255, .6);
+    padding: 20px 0;
     margin-right: 10px;
     margin-bottom: 10px;
     position: relative;
+}
+
+#contact .flex .right{
+    justify-content: center;
 }
 
 #contact .flex .left .background, #contact .flex .right .background{
@@ -448,7 +453,6 @@ body #accueil{
 }
 
 #contact .flex .left>*, #contact .flex .right>*{
-    padding: 10px;
     position: relative;
     z-index: 100;
 }
@@ -464,15 +468,21 @@ body #accueil{
 #contact input{
     width: 100%;
     border: none;
-    height: 4vh;
+    height: 5vh;
+    padding: 2px;
     margin-bottom: 10px;
     font-size: 20px;
     margin-bottom: 25px;
+    background-color: #FFFFFF;
+    color: #OOOOOO;
 }
 
 #contact textarea{
     width: 100%;
     height: 150px;
+    background-color: #FFFFFF;
+    color: #OOOOOO;
+    border: 1px solid #373737;
 }
 
 #contact .error{
@@ -500,7 +510,7 @@ body #accueil{
 }
 
 #contact input:placeholder-shown:invalid + .error::after{
-    content: "Champs obligatoire";
+    content: "Champs obligatoire2";
 }
 
 #contact input:valid + .error::after{
@@ -508,8 +518,15 @@ body #accueil{
     content: none;
 }
 
-#contact .map{
-    background-color: white;
+#contact .flex .right .map{
+    background-color: #000000;
     width: 80%;
     height: 30vh;
+    padding: 2px;
+    margin-bottom: 20px;
+}
+
+#contact .map iframe{
+    width: 100%;
+    height: 100%;
 }
