@@ -383,7 +383,7 @@ body #accueil{
     font-weight: bold;
     font-size: 2em;
     color: #C0B283;
-    text-shadow: 1px 1px rgba(220, 208, 192, .8);
+    text-shadow: 2px 2px rgba(0, 0, 0, .8);
 }
 
 #apropos .social{
