@@ -51,25 +51,37 @@ var div5 = document.querySelectorAll(".flex div").forEach(function(div){
 
 // var birthday = prompt("Date de naissance : ");
 // var today = prompt("Date du jour : ");
+//
+// var birthdaySplit = birthday.split("/");
+// var todaySplit = today.split("/");
+// var age = parseInt(todaySplit[2],10) - parseInt(birthdaySplit[2],10);
+// if(todaySplit[1] < birthdaySplit[1]){
+//     age--;
+// }else if(todaySplit[1] == birthdaySplit[1] && todaySplit[0] < todaySplit[0]){
+//     age--;
+// }
+//
+//     console.log(birthdaySplit[1] - todaySplit[1]);
+// if(todaySplit[1] == birthdaySplit[1] && todaySplit[0] > birthdaySplit[0]){
+//     alert("Bientôt ton anniversaire !!!");
+// }else if (birthdaySplit[1] - todaySplit[1] <= 0 && birthdaySplit[1] - todaySplit[1] >= -2) {
+//     alert("Un peu de patience.");
+// }else{
+//     alert("T'as encore le temps.");
+// }
 
-var birthday = "01/06/1985";
-var today    = "03/06/2019"
+//***** 7 *****\\
 
-var birthdaySplit = birthday.split("/");
-var todaySplit = today.split("/");
-var age = parseInt(todaySplit[2],10) - parseInt(birthdaySplit[2],10);
-if(todaySplit[1] < birthdaySplit[1]){
-    age--;
-}else if(todaySplit[1] == birthdaySplit[1] && todaySplit[0] < todaySplit[0]){
-    age--;
-}
-console.log("Vous avez "+age+" ans");
-console.log(birthdaySplit[1]+"-"+todaySplit[1]+"="+ (birthdaySplit[1] - todaySplit[1]));
-
-if(todaySplit[1] == birthdaySplit[1] && todaySplit[0] > todaySplit[0]){
-    alert("Bientôt ton anniversaire !!!");
-}else if (birthdaySplit[1] - todaySplit[1] <= 2 && todaySplit[1] != birthdaySplit[1]) {
-    alert("Un peu de patience.");
-}else if( birthdaySplit[1] - todaySplit[1] > 2 ){
-    alert("T'as encore le temps.");
-}
+var ex7 = document.getElementById("ex7");
+ex7.addEventListener('mouseenter',function(){
+    this.style.color = "red";
+});
+ex7.addEventListener('mouseleave',function(){
+    this.style.color = "black";
+});
+ex7.addEventListener('click',function(){
+    this.style.color = "green";
+});
+ex7.addEventListener('dblclick',function(){
+    this.style.color = "blue";
+});
