@@ -44,7 +44,8 @@ if((annee % 4 == 0 && annee % 100 != 0) || annee % 400 == 0){
 
 //*** 6 ***\\
 
-var continuer = true;
+// var continuer = true;
+var continuer = false;
 while( continuer ){
     var prp = prompt("Entrer : abcdef");
     if(prp == "abcdef"){
@@ -73,3 +74,48 @@ var rdm = Math.floor(Math.random() * (max - min + 1)) + min;
 phrase += " "+cods[rdm];
 
 console.log(phrase);
+
+//*** 8 ***\\
+
+// var word = prompt("Entre un mot");
+word = "Ananas";
+
+document.getElementsByTagName("body")[0].innerHTML = "\
+    <p>"+word.bold().fontcolor("red")+"</p> \
+    <p'>"+word.toLowerCase()+"</p> \
+    <p'>"+word.toUpperCase()+"</p> \
+";
+
+var voyelle = ['a','e','i','o','u'];
+var count = [0,0];
+for (var c of word.toLowerCase()){
+    if(voyelle.indexOf(c) != -1){
+        count[0]++;
+    }else{
+        count[1]++;
+    }
+}
+
+document.getElementsByTagName("body")[0].innerHTML += "<p>Ce mot contient "+count[0]+" voyelles et "+count[1]+" consonnes.</p>";
+
+var reverse = "";
+for(var i=word.length-1; i>=0; i--){
+    reverse +=word[i];
+}
+document.getElementsByTagName("body")[0].innerHTML += "<p>"+reverse+"</p>";
+
+var wordArray = word.toLowerCase().split("");
+var reverseArray = reverse.toLowerCase().split("");
+var palindrome = true;
+for(var i=0; i<wordArray.length; i++){
+    if(wordArray[i] != reverseArray[i]){
+        palindrome = false;
+        i = wordArray.length;
+    }
+}
+
+if(palindrome){
+    document.getElementsByTagName("body")[0].innerHTML += "<p>"+word+" est un palindrome</p>";
+}else{
+    document.getElementsByTagName("body")[0].innerHTML += "<p>"+word+" n'est pas un palindrome</p>";
+}
