@@ -1,0 +1,63 @@
+/*
+phone portrait     #FF000050
+phone landscape    #00FF0050
+pc                 #0000FF50
+*/
+
+.contener{
+    display: flex;
+    flex-direction: column;
+}
+
+.div_un{
+    background-color: red;
+}
+
+.div_un img{
+    display: none;
+}
+
+.div_deux{
+    background-color: green;
+}
+
+.div_trois{
+    background-color: blue;
+}
+
+ul{
+    display: flex;
+    flex-direction: column;
+}
+
+body{
+    background-color: #FF000050;
+}
+
+@media screen and (orientation: landscape) and (max-width: 900px){
+    .contener{
+        flex-direction: row;
+    }
+    body{
+        background-color: #00FF0050;
+    }
+}
+
+@media screen and (min-width: 900px){
+    .contener{
+        flex-direction: row;
+    }
+    ul{
+        flex-direction: row;
+    }
+    ul li{
+        padding-right: 20px;
+    }
+
+    .div_un img{
+        display: block;
+    }
+    body{
+        background-color: #0000FF50;
+    }
+}
