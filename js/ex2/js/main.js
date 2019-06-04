@@ -34,7 +34,7 @@ noms.forEach(function(nom){
 
 //*** 5 ***\\
 
-var annee = 2014;
+var annee = 2019;
 
 if((annee % 4 == 0 && annee % 100 != 0) || annee % 400 == 0){
     console.log(annee+" est bissextile");
@@ -44,8 +44,8 @@ if((annee % 4 == 0 && annee % 100 != 0) || annee % 400 == 0){
 
 //*** 6 ***\\
 
-// var continuer = true;
-var continuer = false;
+var continuer = true;
+// var continuer = false;
 while( continuer ){
     var prp = prompt("Entrer : abcdef");
     if(prp == "abcdef"){
@@ -64,7 +64,6 @@ var max = noms.length - 1;
 var rdm = Math.floor(Math.random() * (max - min + 1)) + min;
 phrase = noms[rdm];
 
-
 var max = verbes.length - 1;
 var rdm = Math.floor(Math.random() * (max - min + 1)) + min;
 phrase += " "+verbes[rdm];
@@ -77,8 +76,8 @@ console.log(phrase);
 
 //*** 8 ***\\
 
-// var word = prompt("Entre un mot");
-word = "Ananas";
+var word = prompt("Entre un mot");
+// word = "Ananas";
 
 document.getElementsByTagName("body")[0].innerHTML = "\
     <p>"+word.bold().fontcolor("red")+"</p> \
