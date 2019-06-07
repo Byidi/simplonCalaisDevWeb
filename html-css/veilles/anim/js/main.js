@@ -3,20 +3,23 @@
 var coeur = document.querySelector(".coeur");
 var body = document.querySelector("body");
 
-for (var i = 0; i < 100; i++) {
-    nc = coeur.cloneNode(true);
-    body.appendChild(nc);
-    setAttr(nc);
+for (var i = 0; i < 500; i++) {
+    newCoeur = coeur.cloneNode(true);
+    body.appendChild(newCoeur);
+    setAttr(newCoeur);
 }
 
 function setAttr(node){
     let attrVal = randomAttr();
-    nc.style.top = attrVal[0]+"%";
-    nc.style.left = attrVal[1]+"%";
-    nc.firstElementChild.style.transform = "rotate("+attrVal[2]+"deg)";
-    nc.childNodes[1].childNodes[1].style.backgroundColor = "rgb("+attrVal[3]+", "+attrVal[4]+", "+attrVal[5]+")";
-    nc.childNodes[1].childNodes[3].style.backgroundColor = "rgb("+attrVal[3]+", "+attrVal[4]+", "+attrVal[5]+")";
-    nc.childNodes[1].childNodes[5].style.backgroundColor = "rgb("+attrVal[3]+", "+attrVal[4]+", "+attrVal[5]+")";
+    node.style.top = attrVal[0]+"%";
+    node.style.left = attrVal[1]+"%";
+    node.firstElementChild.style.transform = "rotate("+attrVal[2]+"deg)";
+
+    var parts = node.firstElementChild.children;
+    for (var part of parts) {
+        part.style.backgroundColor = "rgb("+attrVal[3]+", "+attrVal[4]+", "+attrVal[5]+")";
+    }
+    node.firstElementChild.style.backgroundColor = "rgb("+attrVal[3]+", "+attrVal[4]+", "+attrVal[5]+")";
 }
 
 function randomAttr(){
