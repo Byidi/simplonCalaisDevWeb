@@ -3,6 +3,17 @@ body{
 	overflow: hidden;
 }
 
+#score{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 30em;
+	position: absolute;
+	z-index: 0;
+}
+
 .coeur{
     width: 20px;
     height: 20px;
@@ -12,6 +23,8 @@ body{
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
 	position: absolute;
+	z-index: 2;
+	transition: all 1s;
 }
 
 .carre{

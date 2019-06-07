@@ -1,13 +1,20 @@
 /*jshint esversion: 9 */
 
+setTimeout(stopGame, 5000);
+
 var coeur = document.querySelector(".coeur");
 var body = document.querySelector("body");
 
-for (var i = 0; i < 500; i++) {
+for (var i = 0; i < 50; i++) {
     newCoeur = coeur.cloneNode(true);
     body.appendChild(newCoeur);
     setAttr(newCoeur);
 }
+
+var coeur = document.querySelectorAll(".coeur");
+coeur.forEach(function(c){
+    c.addEventListener("click",destroyCoeur);
+});
 
 function setAttr(node){
     let attrVal = randomAttr();
@@ -36,4 +43,33 @@ function randomAttr(){
     let green = Math.floor(Math.random() * (colorMax - colorMin + 1)) + colorMin;
     let blue = Math.floor(Math.random() * (colorMax - colorMin + 1)) + colorMin;
     return [top, left, rotate, red, green, blue];
+}
+
+function destroyCoeur(node){
+    console.log(node);
+    node.target.style.width = "500px";
+    node.target.style.height = "500px";
+    node.target.style.opacity = "0";
+    node.target.style.zIndex = "1";
+    incScore();
+    setTimeout(removeNode, 1000, node.target);
+}
+
+function removeNode(node){
+    node.remove();
+}
+
+function incScore(){
+    var scoreStr = document.querySelector("#score").innerHTML;
+    var score = parseInt(scoreStr, 10);
+    score++;
+    document.querySelector("#score").innerHTML = score;
+}
+
+function stopGame(){
+    let coeur = document.querySelectorAll(".coeur");
+    coeur.forEach(function(c){
+        c.removeEventListener("click",destroyCoeur);
+    });
+    document.querySelector("#score").style.color = "red";
 }
