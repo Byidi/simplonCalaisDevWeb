@@ -1,0 +1,113 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+*::selection{
+    background : #FFFFFFCC;
+}
+
+*::-moz-selection{
+    background : #FFFFFFCC;
+}
+
+*::-webkit-selection{
+    background : #FFFFFFCC;
+}
+
+*::-o-selection{
+    background : #FFFFFFCC;
+}
+
+*::-ms-selection{
+    background : #FFFFFFCC;
+}
+
+#content{
+    width: 300px;
+    margin: auto;
+    margin-top: 20vh;
+    border: 1px solid black;
+    position: relative;
+    z-index: 100;
+}
+
+#content h1{
+    text-align: center;
+}
+
+#content #choix{
+    width: 300px;
+    height: 300px;
+    font-size: 100px;
+    text-align: center;
+    box-sizing: border-box;
+    background-size: 100%;
+    color: pink;
+    text-shadow: 5px 5px black;
+}
+
+#background{
+    width: 100%;
+    background-color: pink;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+#background table{
+  width: 100%;
+}
+
+#background td{
+    height: 25px;
+    width: 25px;
+    border: 1px solid black;
+    text-align:center;
+}
+
+#history{
+    background-color: #FFFFFFAA;
+    padding : 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+}
+
+#nyancat_1, #nyancat_2, #nyancat_3{
+    position : absolute;
+    width: 30%;
+    z-index : 999;
+}
+
+#nyancat_1{
+    top : 50px;
+    left : -1000px;
+    transition: left 5s;
+}
+
+#nyancat_2{
+    top : 50vh;
+    right : -1000px;
+    transform: translateY(-50%) scaleX(-1);
+    transition: right 5s;
+}
+
+#nyancat_3{
+    bottom : 50px;
+    left : -1000px;
+    transition: left 5s;
+}
+
+#resultat{
+    width : 100%;
+    text-align: center;
+    color : orange;
+    text-shadow: 5px 5px black;
+    position : relative;
+    z-index: 50;
+    font-size : 100px;
+    font-weight: bold;
+}

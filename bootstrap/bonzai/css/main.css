@@ -1,0 +1,322 @@
+*,body{
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-family: 'Raleway', sans-serif;
+  letter-spacing: 3px;
+}
+
+.text-white{
+    color : white;
+}
+
+section{
+    z-index: 0;
+    padding: 15vh 0px;
+}
+
+#message{
+    width : 50px;
+    height: 50px;
+    color: white;
+    background-color: #8080BE;
+    position: fixed;
+    bottom: 5vh;
+    right: 5vh;
+    z-index: 900;
+    font-size: 2em;
+    text-align:center;
+    padding: 10px;
+    border-radius: 50%;
+    border: 1px solid #DADADA;
+    box-shadow: 0px 8px 8px rgba(125,125,125,0.7);
+}
+
+#message:hover{
+    background-color: #5A5A91;
+}
+
+#message a{
+    color: white;
+}
+
+#message i{
+    transform: translateY(-5px);
+}
+
+.navbar{
+    background-color: rgba(118, 118, 178, 0);
+    z-index: 800;
+}
+
+#menu-bg{
+    position: fixed;
+    top : 0px;
+    left: 0px;
+    width: 100%;
+    height: 49px;
+    background-image: url("../img/payments-banner-graphic.png");
+    background-position: bottom left;
+    z-index : 10;
+}
+
+.navbar a{
+    text-transform: uppercase;
+    color: white;
+}
+
+.navbar .icon-bar{
+    background: white;
+}
+
+.navbar-brand img, .navbar-brand div{
+    height : 30px;
+    line-height: 30px;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -6px;
+}
+
+.header{
+    /*padding: 30vh 0px 30vh 0px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 99vh;
+    background-image: url("../img/payments-banner-graphic.png");
+    background-size: 100% 100%;
+    z-index: 20;
+}
+
+.header h1{
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.header p{
+    font-size: 1.7em;
+    margin: 25px 0px;
+    font-weight: bold;
+}
+
+.header .btn{
+    padding: 1vw 2vw;
+    color: rgba(118, 118, 178, 1);
+    text-transform: uppercase;
+}
+
+.header .btn:hover{
+    background-color: white;
+}
+
+.header .banniere{
+    width: 90vw;
+}
+
+.keywords{
+    padding: 15vh 0px;
+    border-bottom: 1px solid #DADADA;
+}
+
+.keywords h3{
+    color: #4D4D4D;
+}
+
+.keywords p{
+    color: #838383;
+}
+
+.keywords div{
+    border-right: 1px solid #DADADA;
+}
+
+.keywords div:last-child{
+    border-right: 0px solid #DADADA;
+}
+
+.keywords div img{
+    height: 12vh;
+}
+
+.pricing{
+    background-color: #F6F9FB;
+    text-transform: uppercase;
+}
+
+.pricing .price{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pricing span{
+    font-size: 1.5em;
+}
+
+.pricing .price span{
+    font-size: 5em;
+    color: #8080BE;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: lighter;
+}
+
+.pricing .price div{
+    text-align: left;
+    font-size: 2em;
+    height: inherit;
+}
+
+.pricing .price div span{
+    display: block;
+    font-size: 0.5em;
+    color: grey;
+}
+
+.creditcard{
+    background-color: #4C535C;
+    padding: 5vh 0px;
+    color: white;
+    font-size: 1.5em;
+}
+
+.invoices, .invoices-inverse{
+    padding : 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow:1;
+    flex-direction: row;
+    border-bottom: 1px solid #DADADA;
+}
+
+.invoices .graph{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow:0;
+    align-items: center;
+    justify-content: center;
+    padding:  0px;
+    background-color: #7CD5EF;
+    position: relative;
+    overflow: hidden;
+}
+
+.invoices-inverse{
+    flex-direction: row-reverse;
+}
+
+.invoices-inverse .graph{
+    background-color: #8080BE;
+}
+
+.invoices .graph img{
+    width: 70%;
+    border-radius: 25px 25px 0px 0px;
+    background-color: white;
+    align-self: flex-end;
+    transform:  translateY(20%);
+}
+
+.invoices .text{
+    align-self: center;
+}
+
+.invoices .text *{
+    width: 50%;
+    margin: auto;
+    text-align: left;
+}
+
+.invoices .text h3{
+    font-size: 2em;
+    color: #6D6D6D;
+    margin-bottom: 20px;
+}
+
+.invoices .text p{
+    font-size: 1.2em;
+    color: #AAAABC;
+}
+
+.invoices .text span{
+    font-style: italic;
+}
+
+.account{
+    padding: 9vh 0px;
+}
+
+.account div{
+    font-size: 1.3em;
+    margin-bottom: 25px;
+}
+
+.account strong{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.account .btn{
+    background-color: #00AD85;
+    color: white;
+    padding: 10px 30px;
+    text-transform: uppercase;
+}
+
+.footer{
+    background-color: #242629;
+    color: #AAAAAA;
+    padding: 7vh 0px;
+}
+
+.footer h3{
+    color: #647777;
+}
+
+.footer a{
+    color: #AAAAAA;
+}
+
+.footer ul{
+    list-style-type: none;
+}
+
+.footer li{
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.footer .contact li{
+    text-transform: none;
+    font-weight: normal;
+}
+
+.footer div{
+    margin-top: 50px;
+}
+
+.footer i{
+    margin-right: 10px;
+}
+
+.footer .legal{
+    font-size: 0.8em;
+    text-align: justify !important;
+}
+
+.footer .legal a{
+    font-weight: bold;
+}
+
+@media (max-width: 768px){
+    #navbar-burger{
+        background-image: url("../img/payments-banner-graphic.png");
+        overflow: visible;
+    }
+    .nav > li > a:focus, .nav > li > a:hover{
+        background-color: rgba(255,255,255,.2);
+    }
+}
