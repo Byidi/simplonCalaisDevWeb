@@ -4,7 +4,8 @@ function demandeInfo(){
     let prenom = prompt("prenom ?");
     let age = prompt("age ?");
 
-    document.querySelector("#tableau").innerHTML += '<tr><td>'+prenom+'</td><td>'+age+'</td><td>'+checkAge(age)+'</tr>';
+    document.querySelector("#tableau").innerHTML += '<tr><td>'+prenom+'</td><td>'+age+'</td><td>'+checkAge(age)+'</td><td><button class="delete btn btn-danger">Supprimer</button></td></tr>';
+    addDeleteEvent();
 }
 
 function checkAge(age){
@@ -21,4 +22,17 @@ function checkAge(age){
     }else{
         return 'Vive les extra-terrestre';
     }
+}
+
+
+function deleteRow(d){
+    d.parentNode.parentNode.remove();
+}
+
+function addDeleteEvent(){
+    var deletes = document.querySelectorAll(".delete");
+    deletes.forEach(function(d){
+        d.removeEventListener("click",deleteRow);
+        d.addEventListener("click",function(){deleteRow(d);});
+    });
 }
