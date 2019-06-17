@@ -1,6 +1,6 @@
 // Les opérateurs : Déterminer si une année est bissextile.
 // Rappel : une année est bissextile si elle est divisible par 4 sans être divisible par 100 ou si elle est divisible par 400.
-// L'opérateur Modulo ( % ) permet d'obtenir le reste d'une  division. Si le reste vaut 0, c'est que la division est com plète.
+// L'opérateur Modulo ( % ) permet d'obtenir le reste d'une  division. Si le reste vaut 0, c'est que la division est complète.
 
 
 /*pseudo code
