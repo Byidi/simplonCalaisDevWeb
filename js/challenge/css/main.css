@@ -176,4 +176,9 @@ body{
 	background-color: rgb(51, 51, 51) !important;
 	border: 1px solid #FFFFFF;
 	border-radius: 50%;
+	animation-name: battement;
+	animation-duration: .5s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
 }

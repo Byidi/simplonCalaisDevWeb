@@ -108,7 +108,7 @@ function initBoard(){
 }
 
 function initEndGame(){
-    // clearBoard();
+    clearBoard();
     let board = document.querySelector('#board');
     let endGameBack = document.createElement("div");
     let endGameMenu = document.createElement("div");
@@ -122,7 +122,11 @@ function initEndGame(){
 
     board.removeEventListener("click", playAudioPew);
 
-    endGameMenu.textContent = "FINI !!! CASSE TOI !!!";
+    endGameMenu.textContent = "FINI !!!";
+
+    var endScoreKill = document.createElement("div");
+    endScoreKill.id = "endScoreKill";
+    var endScoreTime = document.createElement('div');
     // TODO: Calcul et affiche resultat
 }
 
@@ -173,8 +177,6 @@ function initGameInfo(){
 
 function initMenu(){
     clearBoard();
-    board.style.backgroundColor = '#000000';
-
     populateMenu();
 
     let menuItems = document.querySelectorAll('.menuItem h3');
