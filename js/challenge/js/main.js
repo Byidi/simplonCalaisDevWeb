@@ -20,13 +20,74 @@ var pew = new Audio('./audio/pew.mp3');
 var boom = new Audio('./audio/boom.mp3');
 var clapclap = new Audio('./audio/clapclap.mp3');
 
+var moveEven = true;
 
 init();
 
+function calcEndScore(){
+    let div = document.querySelector('#endScoreTotalCalc');
+
+    let scoreKill = calcEndSubScore('kill');
+    let scoreTime = calcEndSubScore('time');
+
+    let score = scoreKill + scoreTime;
+
+    console.log(scoreKill+"/"+scoreTime+"/"+score);
+
+    updateEndScore(score, div.childNodes[0]);
+}
+
+function calcEndSubScore(sub){
+    // TODO:
+    // IF BOMB DIE MALUS
+    // MALUS BY CLICK
+    // BONUS IF ALL CLEAR
+    let div = null;
+    if(sub == 'time'){
+        div = document.querySelector('#endScoreTimeCalc');
+    }else{
+        div = document.querySelector('#endScoreKillCalc');
+    }
+    let nb = parseInt(div.childNodes[0].textContent, 10);
+    let mul = parseInt(div.childNodes[2].textContent, 10);
+    let child = div.childNodes[4];
+
+    child.textContent = 0;
+
+    let score = nb * mul;
+
+    updateEndScore(score, child);
+
+    return score;
+}
+
+function updateEndScore(score, resultChild){
+    let affScore = 0;
+    let scoreInterval = setInterval(function(){
+        if(affScore == score){
+            clearInterval(scoreInterval);
+        }else{
+            if(score >= 10000){
+                affScore += 10;
+            }else if( score >= 1000){
+                affScore += 5;
+            }else{
+                affScore++;
+            }
+            resultChild.textContent = affScore;
+        }
+    }, 5);
+}
 
 function clearBoard(){
     let board = document.querySelector("#board");
     removeChild(board);
+}
+
+function createFiller(){
+    let filler = document.createElement('div');
+    filler.classList.add('filler');
+    return filler;
 }
 
 function createShape(i, shape){
@@ -51,6 +112,32 @@ function createShape(i, shape){
 
     newShape.addEventListener("click",destroyShape, {capture:false});
 
+}
+
+function createTimer(){
+    let board = document.querySelector("#board");
+
+    let startTimer = document.createElement("div");
+    let spinner = document.createElement("div");
+    let filler = document.createElement("div");
+    let mask = document.createElement("div");
+    let startTimerBack = document.createElement("div");
+    let startTimerText = document.createElement("div");
+
+    startTimer.id = "startTimer";
+    spinner.classList.add("spinner", "pie");
+    filler.classList.add("filler", "pie");
+    mask.classList.add("mask");
+    startTimerBack.id = "popBack";
+    startTimerText.id = "startTimerText";
+
+    startTimer.appendChild(spinner);
+    startTimer.appendChild(filler);
+    startTimer.appendChild(mask);
+    startTimerBack.appendChild(startTimer);
+    board.appendChild(startTimerText);
+    board.appendChild(startTimerBack);
+    startTimerText.textContent = 5;
 }
 
 function destroyShape(node){
@@ -115,20 +202,15 @@ function initEndGame(){
 
     endGameBack.id = "popBack";
     endGameMenu.id = "menu";
+    endGameMenu.classList.add('endGame');
 
     endGameBack.appendChild(endGameMenu);
     board.appendChild(endGameBack);
 
-
     board.removeEventListener("click", playAudioPew);
 
-    endGameMenu.textContent = "FINI !!!";
-
-    var endScoreKill = document.createElement("div");
-    endScoreKill.id = "endScoreKill";
-    var endScoreTime = document.createElement('div');
-
-    // TODO: Calcul et affiche resultat
+    populateEndGameMenu();
+    calcEndScore();
 }
 
 function initGame(mode){
@@ -196,26 +278,32 @@ function initMenu(){
 
 function moveShape(){
     let shapes = document.querySelectorAll(".shape");
+
+    let startIte = (moveEven)?0:1;
+
     shapes.forEach(function(shape){
         let i = shape.id.slice(6);
-        shapesInfo[i].x += (shapesInfo[i].moveLeft)?-selectedMode.speed:selectedMode.speed;
-        shapesInfo[i].y += (shapesInfo[i].moveTop)?-selectedMode.speed:selectedMode.speed;
+        // if ((i % 2 == 0 && moveEven) || (i % 2 != 0 && !moveEven)){
+            shapesInfo[i].x += (shapesInfo[i].moveLeft)?-selectedMode.speed:selectedMode.speed;
+            shapesInfo[i].y += (shapesInfo[i].moveTop)?-selectedMode.speed:selectedMode.speed;
 
-        if(shapesInfo[i].x <= shapesInfo[i].size){
-            shapesInfo[i].moveLeft = 0;
-        }else if(shapesInfo[i].x >= board.clientWidth - shapesInfo[i].size){
-            shapesInfo[i].moveLeft = 1;
-        }
+            if(shapesInfo[i].x <= shapesInfo[i].size){
+                shapesInfo[i].moveLeft = 0;
+            }else if(shapesInfo[i].x >= board.clientWidth - shapesInfo[i].size){
+                shapesInfo[i].moveLeft = 1;
+            }
 
-        if(shapesInfo[i].y <= shapesInfo[i].size){
-            shapesInfo[i].moveTop = 0;
-        }else if(shapesInfo[i].y >= board.clientHeight - shapesInfo[i].size){
-            shapesInfo[i].moveTop = 1;
-        }
+            if(shapesInfo[i].y <= shapesInfo[i].size){
+                shapesInfo[i].moveTop = 0;
+            }else if(shapesInfo[i].y >= board.clientHeight - shapesInfo[i].size){
+                shapesInfo[i].moveTop = 1;
+            }
 
-        shape.style.left =  shapesInfo[i].x+"px";
-        shape.style.top = shapesInfo[i].y+"px";
+            shape.style.left =  shapesInfo[i].x+"px";
+            shape.style.top = shapesInfo[i].y+"px";
+        // }
     });
+    moveEven = !moveEven;
 }
 
 function playAudio(audio){
@@ -224,6 +312,117 @@ function playAudio(audio){
     }else{
         audio.currentTime = 0;
     }
+}
+
+function populateEndGameMenu(){
+    let endGameMenu = document.querySelector('#menu.endGame');
+
+    let endTitle = document.createElement("h2");
+    endTitle.textContent = 'Résultats';
+
+    let endScoreKill = document.createElement("div");
+    endScoreKill.id = 'endScoreKill';
+
+    let endScoreTime = document.createElement('div');
+    endScoreTime.id = 'endScoreTime';
+
+    let endScoreTotal = document.createElement('div');
+    endScoreTotal.id = 'endScoreTotal';
+
+    endGameMenu.appendChild(endTitle);
+
+    endGameMenu.appendChild(endScoreKill);
+    endGameMenu.appendChild(endScoreTime);
+    endGameMenu.appendChild(endScoreTotal);
+
+    populateEndGameMenuScoreKill();
+    populateEndGameMenuScoreTime();
+    populateEndGameMenuScoreTotal();
+}
+
+function populateEndGameMenuScoreTime(){
+    let endScoreTime = document.querySelector('#endScoreTime');
+
+    let endScoreTimeText = document.createElement('div');
+    endScoreTimeText.id = 'endScoreTimeText';
+    endScoreTimeText.textContent = 'Temps restant';
+    let endScoreTimeValue = document.createElement('div');
+    endScoreTimeValue.id = 'endScoreTimeValue';
+    let endScoreTimeCalc =  document.createElement('div');
+    endScoreTimeCalc.id = 'endScoreTimeCalc';
+    let endScoreTimeNb = document.createElement('span');
+    let endScoreTimeX = document.createElement('span');
+    let endScoreTimeMul = document.createElement('span');
+    let endScoreTimeEq = document.createElement('span');
+    let endScoreTimeResult = document.createElement('span');
+
+    endScoreTimeNb.textContent = document.querySelector("#timer span").textContent;
+    endScoreTimeX.textContent = " x ";
+    endScoreTimeMul.textContent = 100;
+    endScoreTimeEq.textContent = ' = ';
+
+    endScoreTimeCalc.appendChild(endScoreTimeNb);
+    endScoreTimeCalc.appendChild(endScoreTimeX);
+    endScoreTimeCalc.appendChild(endScoreTimeMul);
+    endScoreTimeCalc.appendChild(endScoreTimeEq);
+    endScoreTimeCalc.appendChild(endScoreTimeResult);
+
+    endScoreTime.appendChild(endScoreTimeText);
+    endScoreTime.appendChild(createFiller());
+    endScoreTime.appendChild(endScoreTimeValue);
+    endScoreTime.appendChild(endScoreTimeCalc);
+}
+
+function populateEndGameMenuScoreKill(){
+    let endScoreKill = document.querySelector('#endScoreKill');
+
+    let endScoreKillText = document.createElement('div');
+    endScoreKillText.id = 'endScoreKillText';
+    endScoreKillText.textContent = 'Cibles détruites';
+    let endScoreKillValue = document.createElement('div');
+    endScoreKillValue.id = 'endScoreKillValue';
+    let endScoreKillCalc =  document.createElement('div');
+    endScoreKillCalc.id = 'endScoreKillCalc';
+    let endScoreKillNb = document.createElement('span');
+    let endScoreKillX = document.createElement('span');
+    let endScoreKillMul = document.createElement('span');
+    let endScoreKillEq = document.createElement('span');
+    let endScoreKillResult = document.createElement('span');
+
+    // endScoreKillNb.textContent = document.querySelector("#score span").textContent;
+    endScoreKillNb.textContent = '20';
+    endScoreKillX.textContent = "x ";
+    endScoreKillMul.textContent = 10;
+    endScoreKillEq.textContent = ' = ';
+
+    endScoreKillCalc.appendChild(endScoreKillNb);
+    endScoreKillCalc.appendChild(endScoreKillX);
+    endScoreKillCalc.appendChild(endScoreKillMul);
+    endScoreKillCalc.appendChild(endScoreKillEq);
+    endScoreKillCalc.appendChild(endScoreKillResult);
+
+    endScoreKill.appendChild(endScoreKillText);
+    endScoreKill.appendChild(createFiller());
+    endScoreKill.appendChild(endScoreKillValue);
+    endScoreKill.appendChild(endScoreKillCalc);
+}
+
+function populateEndGameMenuScoreTotal(){
+    let endScoreTotal = document.querySelector('#endScoreTotal');
+
+    let endScoreTotalText = document.createElement('div');
+    endScoreTotalText.id = 'endScoreKillText';
+    endScoreTotalText.textContent = 'Total';
+
+    let endScoreTotalCalc =  document.createElement('div');
+    endScoreTotalCalc.id = 'endScoreTotalCalc';
+    let endScoreTotalResult = document.createElement('span');
+
+    endScoreTotalCalc.appendChild(endScoreTotalResult);
+
+    endScoreTotal.appendChild(endScoreTotalText);
+    endScoreTotal.appendChild(createFiller());
+    endScoreTotal.appendChild(endScoreTotalCalc);
 }
 
 function populateMenu() {
@@ -294,6 +493,9 @@ function random(min, max){
 }
 
 function removeChild(node){
+    if(node.childElementCount == 0){
+        return;
+    }
     node.childNodes.forEach(function(child){
         if(child.childElementCount == 0){
             setTimeout(function(){child.remove();}, 1);
@@ -326,37 +528,9 @@ function setAttr(node){
 }
 
 function startGame(){
-    let board = document.querySelector("#board");
+    createTimer();
+    let startTimerText = document.querySelector('#startTimerText');
 
-    /*
-    startTimer = wrapper
-    startTimerSpin = spinner
-    startTimerFiller = filler
-    startTimerMask = mask
-     */
-
-    let startTimer = document.createElement("div");
-    let spinner = document.createElement("div");
-    let filler = document.createElement("div");
-    let mask = document.createElement("div");
-    let startTimerBack = document.createElement("div");
-    let startTimerText = document.createElement("div");
-
-    startTimer.id = "startTimer";
-    spinner.classList.add("spinner", "pie");
-    filler.classList.add("filler", "pie");
-    mask.classList.add("mask");
-    startTimerBack.id = "popBack";
-    startTimerText.id = "startTimerText";
-
-    startTimer.appendChild(spinner);
-    startTimer.appendChild(filler);
-    startTimer.appendChild(mask);
-    startTimerBack.appendChild(startTimer);
-    board.appendChild(startTimerText);
-    board.appendChild(startTimerBack);
-    startTimerText.textContent = 5;
-    
     let decompte = setInterval(function(){
         let time = parseInt(startTimerText.textContent, 10);
         time --;
@@ -364,11 +538,12 @@ function startGame(){
     }, 1000);
 
     setTimeout(function(){
-        moveShapeInterval = setInterval(moveShape, 100);
+        moveShapeInterval = setInterval(moveShape, 50);
     }, 1000);
 
     setTimeout(function(){
         clearInterval(decompte);
+        let startTimerBack = document.querySelector('#popBack');
         removeChild(startTimerBack);
         removeNode(startTimerBack);
         removeNode(startTimerText);
