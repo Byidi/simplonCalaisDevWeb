@@ -47,7 +47,7 @@ body{
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(255, 255, 255, .1);
+	background-color: rgba(255, 255, 255, .5);
 	overflow: auto;
 	z-index: 900;
 	display: flex;
@@ -55,30 +55,92 @@ body{
 	align-items: center;
 }
 
-#startTimer{
-	width: 30vw;
-	height: 30vw;
-	color: #FF0000;
-	font-size: 15em;
-	z-index: 999;
-	background-color: #FFFFFF50;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: 5px solid #FFD700;
-	border-radius: 50%;
-	z-index: 950;
+#startTimer {
+	width: 250px;
+	height: 250px;
 	position: relative;
-	animation-name: battement;
-	animation-duration: .5s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
+	background: rgb(255, 255, 255);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 998;
 }
 
-#startTimer span{
+#startTimerText{
+	width: 1px;
+	color: rgb(235, 49, 49);
+	font-size: 7em;
+	z-index: 999;
 	position: absolute;
-	top: 55px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -51%);
+	margin-top: 15px;
+	margin-left: -25px;
+}
+
+#startTimer .pie {
+	width: 50%;
+	height: 100%;
+	transform-origin: 100% 50%;
+	position: absolute;
+	background: rgb(0, 136, 204);
+}
+
+#startTimer .spinner {
+	border-radius: 100% 0 0 100% / 50% 0 0 50%;
+	z-index: 200;
+	border-right: none;
+	animation: rota 1s linear infinite;
+}
+
+#startTimer .spinner:after {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background: rgb(255, 255, 255);
+	border: 1px solid rgba(0,0,0,0.5);
+	box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+	border-radius: 50%;
+	top: 10px;
+	right: 10px;
+	content: "";
+	display: none;
+}
+
+#startTimer .filler {
+	border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+	left: 50%;
+	opacity: 0;
+	z-index: 100;
+	animation: fill 1s steps(1,end) infinite;
+	border-left: none;
+}
+
+#startTimer .mask {
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	background: inherit;
+	opacity: 1;
+	z-index: 300;
+	animation: mask 1s steps(1,end) infinite;
+}
+
+@keyframes rota {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+@keyframes mask {
+	0% { opacity: 1; }
+	50%, 100% { opacity: 0; }
+}
+
+@keyframes fill {
+	0% { opacity: 0; }
+	50%, 100% { opacity: 1; }
 }
 
 @keyframes battement{

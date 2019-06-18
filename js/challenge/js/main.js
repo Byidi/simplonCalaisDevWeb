@@ -127,6 +127,7 @@ function initEndGame(){
     var endScoreKill = document.createElement("div");
     endScoreKill.id = "endScoreKill";
     var endScoreTime = document.createElement('div');
+
     // TODO: Calcul et affiche resultat
 }
 
@@ -327,21 +328,39 @@ function setAttr(node){
 function startGame(){
     let board = document.querySelector("#board");
 
-    let startTimerBack = document.createElement("div");
+    /*
+    startTimer = wrapper
+    startTimerSpin = spinner
+    startTimerFiller = filler
+    startTimerMask = mask
+     */
+
     let startTimer = document.createElement("div");
-    let startTimerSpan = document.createElement('span');
-    startTimerBack.id = "popBack";
+    let spinner = document.createElement("div");
+    let filler = document.createElement("div");
+    let mask = document.createElement("div");
+    let startTimerBack = document.createElement("div");
+    let startTimerText = document.createElement("div");
+
     startTimer.id = "startTimer";
-    startTimerSpan.textContent = 5;
+    spinner.classList.add("spinner", "pie");
+    filler.classList.add("filler", "pie");
+    mask.classList.add("mask");
+    startTimerBack.id = "popBack";
+    startTimerText.id = "startTimerText";
 
-    startTimer.appendChild(startTimerSpan);
+    startTimer.appendChild(spinner);
+    startTimer.appendChild(filler);
+    startTimer.appendChild(mask);
     startTimerBack.appendChild(startTimer);
+    board.appendChild(startTimerText);
     board.appendChild(startTimerBack);
-
+    startTimerText.textContent = 5;
+    
     let decompte = setInterval(function(){
-        let time = parseInt(startTimer.textContent, 10);
+        let time = parseInt(startTimerText.textContent, 10);
         time --;
-        startTimerSpan.textContent = time;
+        startTimerText.textContent = time;
     }, 1000);
 
     setTimeout(function(){
@@ -350,9 +369,11 @@ function startGame(){
 
     setTimeout(function(){
         clearInterval(decompte);
+        removeChild(startTimerBack);
         removeNode(startTimerBack);
+        removeNode(startTimerText);
         gamePlay();
-    }, 5500);
+    }, 6000);
 
 }
 
