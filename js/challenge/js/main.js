@@ -4,11 +4,12 @@ var shapesInfo = [];
 var gameMode = [
     {'name': 'Noob', 'shapes': 20, 'bomb': 3, 'time': 100, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
     {'name': 'Hardcore', 'shapes': 80, 'bomb': 20, 'time': 45, 'speed': 10, 'desc': 'Presque un mode pour les vrais joueurs'},
-    {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 15, 'desc': 'Enfin un vrai mode de jeu'},
+    {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 30, 'desc': 'Enfin un vrai mode de jeu'},
     {'name': 'Infini', 'shapes': 100, 'bomb': 30, 'time': 0, 'speed': 10, 'desc': 'Renouvellement continu, vitesse incrémentale, temps entre chaque cibles de plus en plus réduit.'}
 ];
 var gameStart = false;
 var selectedMode = null;
+var score = [0, 0];
 
 var moveShapeInterval = null;
 var timerInterval = null;
@@ -20,8 +21,6 @@ var pew = new Audio('./audio/pew.mp3');
 var boom = new Audio('./audio/boom.mp3');
 var clapclap = new Audio('./audio/clapclap.mp3');
 
-var moveEven = true;
-
 init();
 
 function calcEndScore(){
@@ -29,36 +28,43 @@ function calcEndScore(){
 
     let scoreKill = calcEndSubScore('kill');
     let scoreTime = calcEndSubScore('time');
+    let scoreClick = calcEndSubScore('click');
 
-    let score = scoreKill + scoreTime;
+    console.log("kill " + scoreKill);
+    console.log("time " + scoreTime);
+    console.log("click " + scoreClick);
 
-    console.log(scoreKill+"/"+scoreTime+"/"+score);
 
-    updateEndScore(score, div.childNodes[0]);
+    let scoreTotal = scoreKill + scoreTime - scoreClick;
+
+    updateEndScore(scoreTotal, div.childNodes[4]);
 }
 
-function calcEndSubScore(sub){
+function calcEndSubScore(line){
+    let lineFirstUpper = uppercaseFirstLetter(line);
+
+    let div = document.querySelector('#endScore'+lineFirstUpper+'Calc');
+    let scoreField = div.childNodes[4];
+
+    let nb = parseInt(div.childNodes[0].textContent, 10);
+    let mul = parseInt(div.childNodes[2].textContent, 10);
+
+    scoreField.textContent = 0;
+
+    let score = nb * mul;
+
+    console.log('line');
+    console.log(nb);
+    console.log(mul);
+
+    updateEndScore(score, scoreField);
+
+    return score;
+
     // TODO:
     // IF BOMB DIE MALUS
     // MALUS BY CLICK
     // BONUS IF ALL CLEAR
-    let div = null;
-    if(sub == 'time'){
-        div = document.querySelector('#endScoreTimeCalc');
-    }else{
-        div = document.querySelector('#endScoreKillCalc');
-    }
-    let nb = parseInt(div.childNodes[0].textContent, 10);
-    let mul = parseInt(div.childNodes[2].textContent, 10);
-    let child = div.childNodes[4];
-
-    child.textContent = 0;
-
-    let score = nb * mul;
-
-    updateEndScore(score, child);
-
-    return score;
 }
 
 function updateEndScore(score, resultChild){
@@ -84,12 +90,6 @@ function clearBoard(){
     removeChild(board);
 }
 
-function createFiller(){
-    let filler = document.createElement('div');
-    filler.classList.add('filler');
-    return filler;
-}
-
 function createShape(i, shape){
     let newShape = document.createElement('div');
 
@@ -110,7 +110,7 @@ function createShape(i, shape){
         'type' : shape
     };
 
-    newShape.addEventListener("click",destroyShape, {capture:false});
+    newShape.addEventListener("click", destroyShape, {capture:false});
 
 }
 
@@ -161,7 +161,12 @@ function gamePlay(){
     timerInterval = setInterval(updateTimer, 1000);
     gameStatusInterval = setInterval(gameStatus, 100);
     let board = document.querySelector('#board');
-    board.addEventListener('click', playAudioPew = function (){playAudio(pew);});
+    board.addEventListener('click', function(e){
+        if(gameStart){
+            playAudio(pew);
+            score[1]++;
+        }
+    });
 }
 
 function gameStatus(){
@@ -279,31 +284,26 @@ function initMenu(){
 function moveShape(){
     let shapes = document.querySelectorAll(".shape");
 
-    let startIte = (moveEven)?0:1;
-
     shapes.forEach(function(shape){
         let i = shape.id.slice(6);
-        // if ((i % 2 == 0 && moveEven) || (i % 2 != 0 && !moveEven)){
-            shapesInfo[i].x += (shapesInfo[i].moveLeft)?-selectedMode.speed:selectedMode.speed;
-            shapesInfo[i].y += (shapesInfo[i].moveTop)?-selectedMode.speed:selectedMode.speed;
+        shapesInfo[i].x += (shapesInfo[i].moveLeft)?-selectedMode.speed:selectedMode.speed;
+        shapesInfo[i].y += (shapesInfo[i].moveTop)?-selectedMode.speed:selectedMode.speed;
 
-            if(shapesInfo[i].x <= shapesInfo[i].size){
-                shapesInfo[i].moveLeft = 0;
-            }else if(shapesInfo[i].x >= board.clientWidth - shapesInfo[i].size){
-                shapesInfo[i].moveLeft = 1;
-            }
+        if(shapesInfo[i].x <= shapesInfo[i].size){
+            shapesInfo[i].moveLeft = 0;
+        }else if(shapesInfo[i].x >= board.clientWidth - shapesInfo[i].size){
+            shapesInfo[i].moveLeft = 1;
+        }
 
-            if(shapesInfo[i].y <= shapesInfo[i].size){
-                shapesInfo[i].moveTop = 0;
-            }else if(shapesInfo[i].y >= board.clientHeight - shapesInfo[i].size){
-                shapesInfo[i].moveTop = 1;
-            }
+        if(shapesInfo[i].y <= shapesInfo[i].size){
+            shapesInfo[i].moveTop = 0;
+        }else if(shapesInfo[i].y >= board.clientHeight - shapesInfo[i].size){
+            shapesInfo[i].moveTop = 1;
+        }
 
-            shape.style.left =  shapesInfo[i].x+"px";
-            shape.style.top = shapesInfo[i].y+"px";
-        // }
+        shape.style.left =  shapesInfo[i].x+"px";
+        shape.style.top = shapesInfo[i].y+"px";
     });
-    moveEven = !moveEven;
 }
 
 function playAudio(audio){
@@ -329,101 +329,166 @@ function populateEndGameMenu(){
     let endScoreTotal = document.createElement('div');
     endScoreTotal.id = 'endScoreTotal';
 
+    let endScoreClick = document.createElement('div');
+    endScoreClick.id = 'endScoreClick';
+
     endGameMenu.appendChild(endTitle);
 
     endGameMenu.appendChild(endScoreKill);
     endGameMenu.appendChild(endScoreTime);
+    endGameMenu.appendChild(endScoreClick);
     endGameMenu.appendChild(endScoreTotal);
 
-    populateEndGameMenuScoreKill();
-    populateEndGameMenuScoreTime();
-    populateEndGameMenuScoreTotal();
+    populateEndGameMenuLine('time');
+    populateEndGameMenuLine('kill');
+    populateEndGameMenuLine('click');
+    populateEndGameMenuLine('total');
 }
 
-function populateEndGameMenuScoreTime(){
-    let endScoreTime = document.querySelector('#endScoreTime');
+function populateEndGameMenuLine(line){
+    let lineFirstUpper = uppercaseFirstLetter(line);
 
-    let endScoreTimeText = document.createElement('div');
-    endScoreTimeText.id = 'endScoreTimeText';
-    endScoreTimeText.textContent = 'Temps restant';
-    let endScoreTimeValue = document.createElement('div');
-    endScoreTimeValue.id = 'endScoreTimeValue';
-    let endScoreTimeCalc =  document.createElement('div');
-    endScoreTimeCalc.id = 'endScoreTimeCalc';
-    let endScoreTimeNb = document.createElement('span');
-    let endScoreTimeX = document.createElement('span');
-    let endScoreTimeMul = document.createElement('span');
-    let endScoreTimeEq = document.createElement('span');
-    let endScoreTimeResult = document.createElement('span');
+    let text =  document.createElement('div');
+    text.id = 'endScore'+lineFirstUpper+'Text';
+    let value = document.createElement('div');
+    value.id = 'endScore'+lineFirstUpper+'Value';
+    let calc = document.createElement('div');
+    calc.id = 'endScore'+lineFirstUpper+'Calc';
 
-    endScoreTimeNb.textContent = document.querySelector("#timer span").textContent;
-    endScoreTimeX.textContent = " x ";
-    endScoreTimeMul.textContent = 100;
-    endScoreTimeEq.textContent = ' = ';
+    let nb = document.createElement('span');
+    let x = document.createElement('span');
+    let mul = document.createElement('span');
+    let eq = document.createElement('span');
+    let result = document.createElement('span');
 
-    endScoreTimeCalc.appendChild(endScoreTimeNb);
-    endScoreTimeCalc.appendChild(endScoreTimeX);
-    endScoreTimeCalc.appendChild(endScoreTimeMul);
-    endScoreTimeCalc.appendChild(endScoreTimeEq);
-    endScoreTimeCalc.appendChild(endScoreTimeResult);
+    let filler = document.createElement('div');
+    filler.classList.add('filler');
 
-    endScoreTime.appendChild(endScoreTimeText);
-    endScoreTime.appendChild(createFiller());
-    endScoreTime.appendChild(endScoreTimeValue);
-    endScoreTime.appendChild(endScoreTimeCalc);
+    let parent = document.querySelector('#endScore'+lineFirstUpper);
+
+    calc.appendChild(nb);
+    calc.appendChild(x);
+    calc.appendChild(mul);
+    calc.appendChild(eq);
+    calc.appendChild(result);
+
+    parent.appendChild(text);
+    parent.appendChild(filler);
+    parent.appendChild(value);
+    parent.appendChild(calc);
+
+    x.textContent = 'x';
+    eq.textContent = '=';
+
+    switch(line){
+        case 'time':
+            text.textContent = 'Temps restant : ';
+            nb.textContent = document.querySelector('#timer span').textContent;
+            mul.textContent = 100;
+        break;
+        case 'kill':
+            text.textContent = 'Cibles détruites : ';
+            nb.textContent = score[0];
+            mul.textContent = 50;
+        break;
+        case 'click':
+            text.textContent = 'Nombres de click : ';
+            nb.textContent = score[1];
+            mul.textContent = 10;
+        break;
+        case 'total':
+            text.textContent = 'Total : ';
+            x.textContent = '';
+            eq.textContent = '';
+        break;
+    }
 }
 
-function populateEndGameMenuScoreKill(){
-    let endScoreKill = document.querySelector('#endScoreKill');
-
-    let endScoreKillText = document.createElement('div');
-    endScoreKillText.id = 'endScoreKillText';
-    endScoreKillText.textContent = 'Cibles détruites';
-    let endScoreKillValue = document.createElement('div');
-    endScoreKillValue.id = 'endScoreKillValue';
-    let endScoreKillCalc =  document.createElement('div');
-    endScoreKillCalc.id = 'endScoreKillCalc';
-    let endScoreKillNb = document.createElement('span');
-    let endScoreKillX = document.createElement('span');
-    let endScoreKillMul = document.createElement('span');
-    let endScoreKillEq = document.createElement('span');
-    let endScoreKillResult = document.createElement('span');
-
-    // endScoreKillNb.textContent = document.querySelector("#score span").textContent;
-    endScoreKillNb.textContent = '20';
-    endScoreKillX.textContent = "x ";
-    endScoreKillMul.textContent = 10;
-    endScoreKillEq.textContent = ' = ';
-
-    endScoreKillCalc.appendChild(endScoreKillNb);
-    endScoreKillCalc.appendChild(endScoreKillX);
-    endScoreKillCalc.appendChild(endScoreKillMul);
-    endScoreKillCalc.appendChild(endScoreKillEq);
-    endScoreKillCalc.appendChild(endScoreKillResult);
-
-    endScoreKill.appendChild(endScoreKillText);
-    endScoreKill.appendChild(createFiller());
-    endScoreKill.appendChild(endScoreKillValue);
-    endScoreKill.appendChild(endScoreKillCalc);
-}
-
-function populateEndGameMenuScoreTotal(){
-    let endScoreTotal = document.querySelector('#endScoreTotal');
-
-    let endScoreTotalText = document.createElement('div');
-    endScoreTotalText.id = 'endScoreKillText';
-    endScoreTotalText.textContent = 'Total';
-
-    let endScoreTotalCalc =  document.createElement('div');
-    endScoreTotalCalc.id = 'endScoreTotalCalc';
-    let endScoreTotalResult = document.createElement('span');
-
-    endScoreTotalCalc.appendChild(endScoreTotalResult);
-
-    endScoreTotal.appendChild(endScoreTotalText);
-    endScoreTotal.appendChild(createFiller());
-    endScoreTotal.appendChild(endScoreTotalCalc);
-}
+// function populateEndGameMenuScoreTime(){
+//     let endScoreTime = document.querySelector('#endScoreTime');
+//
+//     let endScoreTimeText = document.createElement('div');
+//     endScoreTimeText.id = 'endScoreTimeText';
+//     endScoreTimeText.textContent = 'Temps restant';
+//     let endScoreTimeValue = document.createElement('div');
+//     endScoreTimeValue.id = 'endScoreTimeValue';
+//     let endScoreTimeCalc =  document.createElement('div');
+//     endScoreTimeCalc.id = 'endScoreTimeCalc';
+//     let endScoreTimeNb = document.createElement('span');
+//     let endScoreTimeX = document.createElement('span');
+//     let endScoreTimeMul = document.createElement('span');
+//     let endScoreTimeEq = document.createElement('span');
+//     let endScoreTimeResult = document.createElement('span');
+//
+//     endScoreTimeNb.textContent = document.querySelector("#timer span").textContent;
+//     endScoreTimeX.textContent = " x ";
+//     endScoreTimeMul.textContent = 100;
+//     endScoreTimeEq.textContent = ' = ';
+//
+//     endScoreTimeCalc.appendChild(endScoreTimeNb);
+//     endScoreTimeCalc.appendChild(endScoreTimeX);
+//     endScoreTimeCalc.appendChild(endScoreTimeMul);
+//     endScoreTimeCalc.appendChild(endScoreTimeEq);
+//     endScoreTimeCalc.appendChild(endScoreTimeResult);
+//
+//     endScoreTime.appendChild(endScoreTimeText);
+//     endScoreTime.appendChild(createFiller());
+//     endScoreTime.appendChild(endScoreTimeValue);
+//     endScoreTime.appendChild(endScoreTimeCalc);
+// }
+//
+// function populateEndGameMenuScoreKill(){
+//     let endScoreKill = document.querySelector('#endScoreKill');
+//
+//     let endScoreKillText = document.createElement('div');
+//     endScoreKillText.id = 'endScoreKillText';
+//     endScoreKillText.textContent = 'Cibles détruites';
+//     let endScoreKillValue = document.createElement('div');
+//     endScoreKillValue.id = 'endScoreKillValue';
+//     let endScoreKillCalc =  document.createElement('div');
+//     endScoreKillCalc.id = 'endScoreKillCalc';
+//     let endScoreKillNb = document.createElement('span');
+//     let endScoreKillX = document.createElement('span');
+//     let endScoreKillMul = document.createElement('span');
+//     let endScoreKillEq = document.createElement('span');
+//     let endScoreKillResult = document.createElement('span');
+//
+//     // endScoreKillNb.textContent = document.querySelector("#score span").textContent;
+//     endScoreKillNb.textContent = '20';
+//     endScoreKillX.textContent = "x ";
+//     endScoreKillMul.textContent = 10;
+//     endScoreKillEq.textContent = ' = ';
+//
+//     endScoreKillCalc.appendChild(endScoreKillNb);
+//     endScoreKillCalc.appendChild(endScoreKillX);
+//     endScoreKillCalc.appendChild(endScoreKillMul);
+//     endScoreKillCalc.appendChild(endScoreKillEq);
+//     endScoreKillCalc.appendChild(endScoreKillResult);
+//
+//     endScoreKill.appendChild(endScoreKillText);
+//     endScoreKill.appendChild(createFiller());
+//     endScoreKill.appendChild(endScoreKillValue);
+//     endScoreKill.appendChild(endScoreKillCalc);
+// }
+//
+// function populateEndGameMenuScoreTotal(){
+//     let endScoreTotal = document.querySelector('#endScoreTotal');
+//
+//     let endScoreTotalText = document.createElement('div');
+//     endScoreTotalText.id = 'endScoreKillText';
+//     endScoreTotalText.textContent = 'Total';
+//
+//     let endScoreTotalCalc =  document.createElement('div');
+//     endScoreTotalCalc.id = 'endScoreTotalCalc';
+//     let endScoreTotalResult = document.createElement('span');
+//
+//     endScoreTotalCalc.appendChild(endScoreTotalResult);
+//     let filler = document.createElement('div');
+//     filler.classList.add('filler');
+//     endScoreTotal.appendChild(endScoreTotalText);
+//     endScoreTotal.appendChild(filler);
+//     endScoreTotal.appendChild(endScoreTotalCalc);
+// }
 
 function populateMenu() {
     let menuBack = document.createElement("div");
@@ -538,7 +603,7 @@ function startGame(){
     }, 1000);
 
     setTimeout(function(){
-        moveShapeInterval = setInterval(moveShape, 50);
+        moveShapeInterval = setInterval(moveShape, 100);
     }, 1000);
 
     setTimeout(function(){
@@ -562,9 +627,8 @@ function stopGame(){
 }
 
 function updateScore(){
-    var score = parseInt(document.querySelector("#score span").textContent, 10);
-    score++;
-    document.querySelector("#score span").textContent = score;
+    score[0]++;
+    document.querySelector("#score span").textContent = score[0];
 }
 
 function updateTimer(){
@@ -576,4 +640,8 @@ function updateTimer(){
     if(time == 0){
         stopGame();
     }
+}
+
+function uppercaseFirstLetter(str){
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }

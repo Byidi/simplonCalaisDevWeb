@@ -152,6 +152,7 @@ body{
 }
 
 /* MENU */
+
 #menu{
 	width: 80%;
 	height: 70%;
@@ -201,6 +202,7 @@ body{
 }
 
 	/* MENU ENDGAME*/
+
 #menu.endGame{
 	flex-direction: column;
 	justify-content: flex-start;
@@ -210,7 +212,7 @@ body{
 	align-self: center;
 }
 
-#endScoreKill, #endScoreTime, #endScoreTotal{
+#endScoreKill, #endScoreTime, #endScoreClick, #endScoreTotal{
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -221,7 +223,7 @@ body{
 	margin-bottom: 20px;
 }
 
-#endScoreKillCalc, #endScoreTimeCalc, #endScoreTotalCalc{
+#endScoreKillCalc, #endScoreTimeCalc, #endScoreClickCalc, #endScoreTotalCalc{
 	display: flex;
 }
 
@@ -238,12 +240,12 @@ body{
 	border-bottom: 2px dotted rgba(0, 0, 0);
 }
 
-#menu.endGame #endScoreKillCalc span, #menu.endGame #endScoreTimeCalc span{
+#menu.endGame #endScoreKillCalc span, #menu.endGame #endScoreTimeCalc span, #menu.endGame #endScoreClickCalc span,{
 	margin: 0px 5px;
 	display: block;
 }
 
-#menu.endGame #endScoreKillCalc span:last-child, #menu.endGame #endScoreTimeCalc span:last-child, #menu.endGame #endScoreTotalCalc span:last-child{
+#menu.endGame #endScoreKillCalc span:last-child, #menu.endGame #endScoreTimeCalc span:last-child, #menu.endGame #endScoreClickCalc span:last-child, #menu.endGame #endScoreTotalCalc span:last-child{
 	width: 100px;
 	content:'aaa';
 	display: block;
@@ -278,6 +280,8 @@ body{
 .coeur:before{
     bottom: 50%;
 }
+
+	/* BOMB */
 
 .bomb{
     transition: all 1s;
