@@ -7,19 +7,22 @@ var gameMode = [
     {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 30, 'desc': 'Enfin un vrai mode de jeu'},
     {'name': 'Infini', 'shapes': 100, 'bomb': 30, 'time': 0, 'speed': 10, 'desc': 'Renouvellement continu, vitesse incrémentale, temps entre chaque cibles de plus en plus réduit.'}
 ];
-var gameStart = false;
-var selectedMode = null;
-var score = [0, 0];
-
-var moveShapeInterval = null;
-var timerInterval = null;
-var gameStatusInterval = null;
-
-var playAudioPew = null;
-
-var pew = new Audio('./audio/pew.mp3');
-var boom = new Audio('./audio/boom.mp3');
-var clapclap = new Audio('./audio/clapclap.mp3');
+var game = {
+    'start': false,
+    'mode': '',
+    'scoreKilled': 0,
+    'clickCount' : 0
+};
+var interval = {
+    'moveShape': null,
+    'timer': null,
+    'gameStatus': null
+};
+var sfx = {
+    'pew': new Audio('./audio/pew.mp3'),
+    'boom': new Audio('./audio/boom.mp3'),
+    'clapclap': new Audio('./audio/clapclap.mp3')
+};
 
 init();
 
@@ -30,12 +33,7 @@ function calcEndScore(){
     let scoreTime = calcEndSubScore('time');
     let scoreClick = calcEndSubScore('click');
 
-    console.log("kill " + scoreKill);
-    console.log("time " + scoreTime);
-    console.log("click " + scoreClick);
-
-
-    let scoreTotal = scoreKill + scoreTime - scoreClick;
+    let scoreTotal = scoreKill + scoreTime + scoreClick;
 
     updateEndScore(scoreTotal, div.childNodes[4]);
 }
@@ -53,36 +51,13 @@ function calcEndSubScore(line){
 
     let score = nb * mul;
 
-    console.log('line');
-    console.log(nb);
-    console.log(mul);
-
     updateEndScore(score, scoreField);
 
     return score;
 
     // TODO:
     // IF BOMB DIE MALUS
-    // MALUS BY CLICK
     // BONUS IF ALL CLEAR
-}
-
-function updateEndScore(score, resultChild){
-    let affScore = 0;
-    let scoreInterval = setInterval(function(){
-        if(affScore == score){
-            clearInterval(scoreInterval);
-        }else{
-            if(score >= 10000){
-                affScore += 10;
-            }else if( score >= 1000){
-                affScore += 5;
-            }else{
-                affScore++;
-            }
-            resultChild.textContent = affScore;
-        }
-    }, 5);
 }
 
 function clearBoard(){
@@ -141,15 +116,15 @@ function createTimer(){
 }
 
 function destroyShape(node){
-    if (gameStart){
-        playAudio(boom);
+    if (game.start){
+        playAudio(sfx.boom);
         let shape = node.target.closest(".shape");
         shape.style.width = "500px";
         shape.style.height = "500px";
         shape.style.opacity = "0";
         shape.style.zIndex = "1";
         if(shape.classList.contains('bomb')){
-            stopGame();
+            stopGame('bomb');
         }
         updateScore();
         setTimeout(removeNode, 1000, shape);
@@ -157,14 +132,16 @@ function destroyShape(node){
 }
 
 function gamePlay(){
-    gameStart = true;
-    timerInterval = setInterval(updateTimer, 1000);
-    gameStatusInterval = setInterval(gameStatus, 100);
+    game.start = true;
+    interval.timer = setInterval(updateTimer, 1000);
+    interval.gameStatus = setInterval(gameStatus, 100);
     let board = document.querySelector('#board');
     board.addEventListener('click', function(e){
-        if(gameStart){
-            playAudio(pew);
-            score[1]++;
+        if(game.start){
+            playAudio(sfx.pew);
+            if(!e.target.classList.contains('cible')){
+                game.clickCount++;
+            }
         }
     });
 }
@@ -180,7 +157,7 @@ function gameStatus(){
     });
 
     if(finish){
-        stopGame();
+        stopGame('clear');
     }
 }
 
@@ -199,7 +176,7 @@ function initBoard(){
     document.querySelector('body').appendChild(board);
 }
 
-function initEndGame(){
+function initEndGame(reason){
     clearBoard();
     let board = document.querySelector('#board');
     let endGameBack = document.createElement("div");
@@ -212,9 +189,7 @@ function initEndGame(){
     endGameBack.appendChild(endGameMenu);
     board.appendChild(endGameBack);
 
-    board.removeEventListener("click", playAudioPew);
-
-    populateEndGameMenu();
+    populateEndGameMenu(reason);
     calcEndScore();
 }
 
@@ -222,12 +197,12 @@ function initGame(mode){
     clearBoard();
     initGameInfo();
 
-    selectedMode = gameMode.find(function(m){
+    game.mode = gameMode.find(function(m){
         return m.name == mode;
     });
 
-    for (var i = 0; i < selectedMode.shapes; i++) {
-        if(i < selectedMode.bomb){
+    for (var i = 0; i < game.mode.shapes; i++) {
+        if(i < game.mode.bomb){
             createShape(i, 'bomb');
         }else{
             createShape(i, 'coeur');
@@ -235,8 +210,8 @@ function initGame(mode){
     }
 
     let timerCmp = document.querySelector("#info #timer span");
-    timerCmp.textContent = selectedMode.time;
-    document.title = "PuntaClick : "+selectedMode.time+"s";
+    timerCmp.textContent = game.mode.time;
+    document.title = "PuntaClick : "+game.mode.time+"s";
 
     let board = document.querySelector('#board');
     board.style.cursor = 'crosshair';
@@ -286,8 +261,8 @@ function moveShape(){
 
     shapes.forEach(function(shape){
         let i = shape.id.slice(6);
-        shapesInfo[i].x += (shapesInfo[i].moveLeft)?-selectedMode.speed:selectedMode.speed;
-        shapesInfo[i].y += (shapesInfo[i].moveTop)?-selectedMode.speed:selectedMode.speed;
+        shapesInfo[i].x += (shapesInfo[i].moveLeft)?-game.mode.speed:game.mode.speed;
+        shapesInfo[i].y += (shapesInfo[i].moveTop)?-game.mode.speed:game.mode.speed;
 
         if(shapesInfo[i].x <= shapesInfo[i].size){
             shapesInfo[i].moveLeft = 0;
@@ -314,7 +289,7 @@ function playAudio(audio){
     }
 }
 
-function populateEndGameMenu(){
+function populateEndGameMenu(reason){
     let endGameMenu = document.querySelector('#menu.endGame');
 
     let endTitle = document.createElement("h2");
@@ -332,20 +307,27 @@ function populateEndGameMenu(){
     let endScoreClick = document.createElement('div');
     endScoreClick.id = 'endScoreClick';
 
+    let endScoreBonus = document.createElement('div');
+    endScoreBonus.id = 'endScoreBonus';
+
     endGameMenu.appendChild(endTitle);
 
     endGameMenu.appendChild(endScoreKill);
     endGameMenu.appendChild(endScoreTime);
     endGameMenu.appendChild(endScoreClick);
+    endGameMenu.appendChild(endScoreBonus);
     endGameMenu.appendChild(endScoreTotal);
 
     populateEndGameMenuLine('time');
     populateEndGameMenuLine('kill');
     populateEndGameMenuLine('click');
+    if(reason != ''){
+        populateEndGameMenuLine('bonus', reason);
+    }
     populateEndGameMenuLine('total');
 }
 
-function populateEndGameMenuLine(line){
+function populateEndGameMenuLine(line, reason=''){
     let lineFirstUpper = uppercaseFirstLetter(line);
 
     let text =  document.createElement('div');
@@ -354,6 +336,7 @@ function populateEndGameMenuLine(line){
     value.id = 'endScore'+lineFirstUpper+'Value';
     let calc = document.createElement('div');
     calc.id = 'endScore'+lineFirstUpper+'Calc';
+    calc.classList.add('endScoreCalc');
 
     let nb = document.createElement('span');
     let x = document.createElement('span');
@@ -388,13 +371,27 @@ function populateEndGameMenuLine(line){
         break;
         case 'kill':
             text.textContent = 'Cibles détruites : ';
-            nb.textContent = score[0];
+            nb.textContent = game.scoreKilled;
             mul.textContent = 50;
         break;
         case 'click':
-            text.textContent = 'Nombres de click : ';
-            nb.textContent = score[1];
-            mul.textContent = 10;
+            text.textContent = 'Tirs loupés : ';
+            nb.textContent = game.clickCount;
+            mul.textContent = -10;
+        break;
+        case 'bonus':
+            switch(reason){
+                case 'clear':
+                    text.textContent = 'Toutes les cibles détruites : ';
+                    nb.textContent = game.mode.shapes - game.mode.bomb;
+                    mul.textContent = game.mode.speed;
+                break;
+                case 'bomb':
+                    text.textContent = 'Bombe explosée : ';
+                    nb.textContent = 1;
+                    mul.textContent = -100 * game.mode.time;
+                break;
+            }
         break;
         case 'total':
             text.textContent = 'Total : ';
@@ -403,92 +400,6 @@ function populateEndGameMenuLine(line){
         break;
     }
 }
-
-// function populateEndGameMenuScoreTime(){
-//     let endScoreTime = document.querySelector('#endScoreTime');
-//
-//     let endScoreTimeText = document.createElement('div');
-//     endScoreTimeText.id = 'endScoreTimeText';
-//     endScoreTimeText.textContent = 'Temps restant';
-//     let endScoreTimeValue = document.createElement('div');
-//     endScoreTimeValue.id = 'endScoreTimeValue';
-//     let endScoreTimeCalc =  document.createElement('div');
-//     endScoreTimeCalc.id = 'endScoreTimeCalc';
-//     let endScoreTimeNb = document.createElement('span');
-//     let endScoreTimeX = document.createElement('span');
-//     let endScoreTimeMul = document.createElement('span');
-//     let endScoreTimeEq = document.createElement('span');
-//     let endScoreTimeResult = document.createElement('span');
-//
-//     endScoreTimeNb.textContent = document.querySelector("#timer span").textContent;
-//     endScoreTimeX.textContent = " x ";
-//     endScoreTimeMul.textContent = 100;
-//     endScoreTimeEq.textContent = ' = ';
-//
-//     endScoreTimeCalc.appendChild(endScoreTimeNb);
-//     endScoreTimeCalc.appendChild(endScoreTimeX);
-//     endScoreTimeCalc.appendChild(endScoreTimeMul);
-//     endScoreTimeCalc.appendChild(endScoreTimeEq);
-//     endScoreTimeCalc.appendChild(endScoreTimeResult);
-//
-//     endScoreTime.appendChild(endScoreTimeText);
-//     endScoreTime.appendChild(createFiller());
-//     endScoreTime.appendChild(endScoreTimeValue);
-//     endScoreTime.appendChild(endScoreTimeCalc);
-// }
-//
-// function populateEndGameMenuScoreKill(){
-//     let endScoreKill = document.querySelector('#endScoreKill');
-//
-//     let endScoreKillText = document.createElement('div');
-//     endScoreKillText.id = 'endScoreKillText';
-//     endScoreKillText.textContent = 'Cibles détruites';
-//     let endScoreKillValue = document.createElement('div');
-//     endScoreKillValue.id = 'endScoreKillValue';
-//     let endScoreKillCalc =  document.createElement('div');
-//     endScoreKillCalc.id = 'endScoreKillCalc';
-//     let endScoreKillNb = document.createElement('span');
-//     let endScoreKillX = document.createElement('span');
-//     let endScoreKillMul = document.createElement('span');
-//     let endScoreKillEq = document.createElement('span');
-//     let endScoreKillResult = document.createElement('span');
-//
-//     // endScoreKillNb.textContent = document.querySelector("#score span").textContent;
-//     endScoreKillNb.textContent = '20';
-//     endScoreKillX.textContent = "x ";
-//     endScoreKillMul.textContent = 10;
-//     endScoreKillEq.textContent = ' = ';
-//
-//     endScoreKillCalc.appendChild(endScoreKillNb);
-//     endScoreKillCalc.appendChild(endScoreKillX);
-//     endScoreKillCalc.appendChild(endScoreKillMul);
-//     endScoreKillCalc.appendChild(endScoreKillEq);
-//     endScoreKillCalc.appendChild(endScoreKillResult);
-//
-//     endScoreKill.appendChild(endScoreKillText);
-//     endScoreKill.appendChild(createFiller());
-//     endScoreKill.appendChild(endScoreKillValue);
-//     endScoreKill.appendChild(endScoreKillCalc);
-// }
-//
-// function populateEndGameMenuScoreTotal(){
-//     let endScoreTotal = document.querySelector('#endScoreTotal');
-//
-//     let endScoreTotalText = document.createElement('div');
-//     endScoreTotalText.id = 'endScoreKillText';
-//     endScoreTotalText.textContent = 'Total';
-//
-//     let endScoreTotalCalc =  document.createElement('div');
-//     endScoreTotalCalc.id = 'endScoreTotalCalc';
-//     let endScoreTotalResult = document.createElement('span');
-//
-//     endScoreTotalCalc.appendChild(endScoreTotalResult);
-//     let filler = document.createElement('div');
-//     filler.classList.add('filler');
-//     endScoreTotal.appendChild(endScoreTotalText);
-//     endScoreTotal.appendChild(filler);
-//     endScoreTotal.appendChild(endScoreTotalCalc);
-// }
 
 function populateMenu() {
     let menuBack = document.createElement("div");
@@ -603,7 +514,7 @@ function startGame(){
     }, 1000);
 
     setTimeout(function(){
-        moveShapeInterval = setInterval(moveShape, 100);
+        interval.moveShape = setInterval(moveShape, 100);
     }, 1000);
 
     setTimeout(function(){
@@ -617,18 +528,43 @@ function startGame(){
 
 }
 
-function stopGame(){
-    gameStart = false;
-    clearInterval(timerInterval);
-    clearInterval(moveShapeInterval);
-    clearInterval(gameStatusInterval);
-    playAudio(clapclap);
-    initEndGame();
+function stopGame(reason){
+    game.start = false;
+    clearInterval(interval.timer);
+    clearInterval(interval.moveShape);
+    clearInterval(interval.gameStatus);
+    playAudio(sfx.clapclap);
+    initEndGame(reason);
+}
+
+function updateEndScore(score, resultChild){
+    let affScore = 0;
+    let scoreInterval = setInterval(function(){
+        if(affScore == score){
+            clearInterval(scoreInterval);
+        }else{
+            if(score >= 10000){
+                affScore += 10;
+            }else if( score >= 1000){
+                affScore += 5;
+            }else if(score <= -10000){
+                affScore -= 10;
+            }else if(score <= -1000){
+                affScore -=5;
+            }else if(score < 0){
+                affScore--;
+            }else{
+                affScore++;
+            }
+
+            resultChild.textContent = affScore;
+        }
+    }, 5);
 }
 
 function updateScore(){
-    score[0]++;
-    document.querySelector("#score span").textContent = score[0];
+    game.scoreKilled++;
+    document.querySelector("#score span").textContent = game.scoreKilled;
 }
 
 function updateTimer(){
@@ -638,7 +574,7 @@ function updateTimer(){
     timerCmp.textContent = time;
     document.title = "PuntaClick : "+time+"s";
     if(time == 0){
-        stopGame();
+        stopGame('time');
     }
 }
 
