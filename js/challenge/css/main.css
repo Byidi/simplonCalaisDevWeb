@@ -34,8 +34,10 @@ body{
 }
 
 #board{
-	width: 100vw;
-	height: 90vh;
+	/* width: 100vw;
+	height: 90vh; */
+	width: 700px;
+	height: 700px;
 	overflow: hidden;
 	position: relative;
 	background-color: rgb(255, 252, 0);
@@ -212,7 +214,7 @@ body{
 	align-self: center;
 }
 
-#endScoreKill, #endScoreTime, #endScoreClick, #endScoreTotal{
+#endScoreKill, #endScoreTime, #endScoreClick, #endScoreBonus, #endScoreTotal{
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -223,7 +225,7 @@ body{
 	margin-bottom: 20px;
 }
 
-#endScoreKillCalc, #endScoreTimeCalc, #endScoreClickCalc, #endScoreTotalCalc{
+#menu.endGame .endScoreCalc{
 	display: flex;
 }
 
@@ -240,12 +242,12 @@ body{
 	border-bottom: 2px dotted rgba(0, 0, 0);
 }
 
-#menu.endGame #endScoreKillCalc span, #menu.endGame #endScoreTimeCalc span, #menu.endGame #endScoreClickCalc span,{
+#menu.endGame .endScoreCalc span{
 	margin: 0px 5px;
 	display: block;
 }
 
-#menu.endGame #endScoreKillCalc span:last-child, #menu.endGame #endScoreTimeCalc span:last-child, #menu.endGame #endScoreClickCalc span:last-child, #menu.endGame #endScoreTotalCalc span:last-child{
+#menu.endGame .endScoreCalc span:last-child{
 	width: 100px;
 	content:'aaa';
 	display: block;

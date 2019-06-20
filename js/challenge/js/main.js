@@ -2,7 +2,7 @@
 
 var shapesInfo = [];
 var gameMode = [
-    {'name': 'Noob', 'shapes': 20, 'bomb': 3, 'time': 100, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
+    {'name': 'Noob', 'shapes': 20, 'bomb': 1, 'time': -1, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
     {'name': 'Hardcore', 'shapes': 80, 'bomb': 20, 'time': 45, 'speed': 10, 'desc': 'Presque un mode pour les vrais joueurs'},
     {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 30, 'desc': 'Enfin un vrai mode de jeu'},
     {'name': 'Infini', 'shapes': 100, 'bomb': 30, 'time': 0, 'speed': 10, 'desc': 'Renouvellement continu, vitesse incrémentale, temps entre chaque cibles de plus en plus réduit.'}
@@ -86,7 +86,7 @@ function createShape(i, shape){
     };
 
     newShape.addEventListener("click", destroyShape, {capture:false});
-
+    generateAnime(i);
 }
 
 function createTimer(){
@@ -159,6 +159,103 @@ function gameStatus(){
     if(finish){
         stopGame('clear');
     }
+}
+
+function calcAnimation(moveLeft, moveTop, start){
+    let end = {'x': -1, 'y': -1};
+    let board = document.querySelector('#board');
+    let dX = board.clientWidth - start.x;
+    let dY = board.clientHeight - start.y;
+
+    if(moveTop && moveLeft){
+        if(start.x > start.y){
+            end.x = start.x - start.y;
+            end.y = 0;
+        }else{
+            end.x = 0;
+            end.y = start.y - start.x;
+        }
+    }else if(moveTop && !moveLeft){
+        if(dX > start.y){
+            end.x = start.x + start.y;
+            end.y = 0;
+        }else{
+            end.x = board.clientWidth;
+            end.y = start.y - dX;
+        }
+    }else if(!moveTop && moveLeft){
+        if(start.x < dY){
+            end.x = 0;
+            end.y = start.x + start.y;
+        }else{
+            end.x = start.x - dY;
+            end.y = board.clientHeight;
+        }
+    }else if(!moveTop && !moveLeft){
+        if(dX < dY){
+            end.x = board.clientWidth;
+            end.y = start.y + dX;
+        }else{
+            end.x = start.x + dY;
+            end.y = board.clientHeight;
+        }
+    }
+    return end;
+}
+
+function generateAnime(id){
+    let board = document.querySelector('#board');
+    let start = {'x': shapesInfo[id].x, 'y':shapesInfo[id].y};
+    let end = [];
+
+    let moveLeft = Boolean(shapesInfo[id].moveLeft);
+    let moveTop = Boolean(shapesInfo[id].moveTop);
+
+    console.log("----------------");
+    console.log("SHAPE "+id);
+
+    console.log("board "+board.clientHeight);
+
+    for(var i = 0; i < 4; i++){
+        end[i] = calcAnimation(moveLeft, moveTop, start);
+
+        let anim = '';
+        anim += (moveTop)?'T':'B';
+        anim += (moveLeft)?'L':'R';
+
+        console.log('anim '+i+' : '+start.x+'/'+start.y+' ==('+anim+')==> '+end[i].x+'/'+end[i].y);
+
+        start = end[i];
+
+        if(end[i].x == 0 || end[i].x == board.clientWidth){
+            moveLeft = !moveLeft;
+            console.log('swap Left/Right');
+        }
+        if(end[i].y == 0 || end[i].y == board.clientHeight){
+            moveTop = !moveTop;
+            console.log('swap Top/Bottom');
+        }
+    }
+
+    var shapeDiv = document.querySelector("#shape_"+id);
+    shapeDiv.animate([
+        {left: start.x+'px', top: start.y+'px'},
+        {left: end[0].x+'px', top: end[0].y+'px'},
+        {left: end[1].x+'px', top: end[1].y+'px'},
+        {left: end[2].x+'px', top: end[2].y+'px'},
+        {left: end[3].x+'px', top: end[3].y+'px'}
+    ], {
+        duration: 5000,
+        iterations: Infinity,
+        direction: 'normal'
+    });
+
+    // console.log("left : "+shape.moveLeft);
+    // console.log("top : "+shape.moveTop);
+
+    // console.log("distance : "+dTop+"/"+dLeft);
+    console.log(end);
+    console.log("----------------");
 }
 
 function init(){
@@ -513,9 +610,9 @@ function startGame(){
         startTimerText.textContent = time;
     }, 1000);
 
-    setTimeout(function(){
-        interval.moveShape = setInterval(moveShape, 100);
-    }, 1000);
+    // setTimeout(function(){
+    //     interval.moveShape = setInterval(moveShape, 100);
+    // }, 1000);
 
     setTimeout(function(){
         clearInterval(decompte);
