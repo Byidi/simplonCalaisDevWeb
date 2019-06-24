@@ -23,6 +23,7 @@ var sfx = {
     'boom': new Audio('./audio/boom.mp3'),
     'clapclap': new Audio('./audio/clapclap.mp3')
 };
+var user = null;
 
 init();
 
@@ -57,8 +58,9 @@ function calcEndScore(){
     let scoreKill = calcEndSubScore('kill');
     let scoreTime = calcEndSubScore('time');
     let scoreClick = calcEndSubScore('click');
+    let scoreBonus = calcEndSubScore('bonus');
 
-    let scoreTotal = scoreKill + scoreTime + scoreClick;
+    let scoreTotal = scoreKill + scoreTime + scoreClick + scoreBonus;
 
     updateEndScore(scoreTotal, div.childNodes[4]);
 }
@@ -263,6 +265,16 @@ function generateKeyframes(end, id){
     return keyframes;
 }
 
+function generateRandomPseudo(){
+    let voyelles = ['a', 'e', 'i', 'o', 'u', 'y'];
+    let consonnes = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z'];
+    let randomPseudo = '';
+    for (var i = 0; i < 8; i++) {
+        randomPseudo += (i%2 == 0)?consonnes[random(0, consonnes.length-1)]:voyelles[random(0, voyelles.length-1)];
+    }
+    return randomPseudo;
+}
+
 function init(){
     initBoard();
     initMenu();
@@ -273,9 +285,11 @@ function initBoard(){
     info.id = 'info';
     let board = document.createElement('div');
     board.id = 'board';
+    let style = document.createElement('style');
 
     document.querySelector('body').appendChild(info);
     document.querySelector('body').appendChild(board);
+    document.querySelector('head').appendChild(style);
 }
 
 function initEndGame(reason){
@@ -349,9 +363,11 @@ function initMenu(){
         item.addEventListener('click', function(e){
             let idSplit = e.target.parentNode.id.split('_');
             if(idSplit[0] == 'gameMode'){
+                user = document.querySelector("#menuPseudoInput").value;
                 initGame(idSplit[1]);
             }else{
                 // TODO: AFFICHE HIGHSCORE PAR MODE
+                populateHightScore();
                 console.log('view score : ' + idSplit[1]);
             }
         });
@@ -468,6 +484,11 @@ function populateEndGameMenuLine(line, reason=''){
                     nb.textContent = 1;
                     mul.textContent = -100 * game.mode.time;
                 break;
+                case 'time':
+                    text.textContent = 'Temps écoulé : ';
+                    nb.textContent = 1;
+                    mul.textContent = -20 * game.mode.time;
+                break;
             }
         break;
         case 'total':
@@ -478,12 +499,25 @@ function populateEndGameMenuLine(line, reason=''){
     }
 }
 
+function populateHightScore(){
+    // TODO: 
+}
+
 function populateMenu() {
     let menuBack = document.createElement("div");
     menuBack.id = 'popBack';
 
     let menu = document.createElement("div");
     menu.id = 'menu';
+
+    let menuPseudo = document.createElement('div');
+    menuPseudo.id = 'menuPseudo';
+    let menuPseudoTxt = document.createElement('h2');
+    menuPseudoTxt.textContent = "Votre pseudo";
+    let menuPseudoInput = document.createElement('input');
+    menuPseudoInput.id = 'menuPseudoInput';
+    let randomPseudo = generateRandomPseudo();
+    menuPseudoInput.value = uppercaseFirstLetter(randomPseudo);
 
     let menuMode = document.createElement("div");
     menuMode.id = 'menuMode';
@@ -499,6 +533,11 @@ function populateMenu() {
 
     menuMode.appendChild(menuModeTitle);
     menuScore.appendChild(menuScoreTitle);
+
+    menuPseudo.appendChild(menuPseudoTxt);
+    menuPseudo.appendChild(menuPseudoInput);
+
+    menu.appendChild(menuPseudo);
     menu.appendChild(menuMode);
     menu.appendChild(menuScore);
     menuBack.appendChild(menu);
@@ -564,6 +603,22 @@ function removeNode(node){
     node.remove();
 }
 
+function saveScore(){
+    if(typeof localStorage!='undefined') {
+        let scores = null;
+        scores = (localStorage.getItem(game.mode.name) == null)?[]:JSON.parse(localStorage.getItem(game.mode.name));
+
+        let scoreAct = parseInt(document.querySelector('#endScoreTotalCalc span:last-child').textContent, 10);
+
+        newScore = {user: user, score: scoreAct};
+        scores.push(newScore);
+
+        localStorage.setItem(game.mode.name, JSON.stringify(scores));
+    }else{
+        console.log('localStorage n\'est pas supporté');
+    }
+}
+
 function setAttr(node){
     let size = random(10,30);
 
@@ -619,6 +674,9 @@ function updateEndScore(score, resultChild){
     let scoreInterval = setInterval(function(){
         if(affScore == score){
             clearInterval(scoreInterval);
+            if(resultChild.parentNode.id == 'endScoreTotalCalc'){
+                saveScore();
+            }
         }else{
             if(score >= 10000){
                 affScore += 10;
