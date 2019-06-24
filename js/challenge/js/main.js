@@ -365,13 +365,10 @@ function initMenu(){
             if(idSplit[0] == 'gameMode'){
                 user = document.querySelector("#menuPseudoInput").value;
                 initGame(idSplit[1]);
-            }else{
-                // TODO: AFFICHE HIGHSCORE PAR MODE
-                populateHightScore();
-                console.log('view score : ' + idSplit[1]);
             }
         });
     });
+    populateHightScore();
 }
 
 function playAudio(audio){
@@ -499,8 +496,44 @@ function populateEndGameMenuLine(line, reason=''){
     }
 }
 
+function sortByScore(a, b){
+    if(a.score < b.score){
+        return 1;
+    }
+    if(a.score > b.score){
+        return -1;
+    }
+    return 0;
+}
+
 function populateHightScore(){
-    // TODO: 
+    if(typeof localStorage!='undefined') {
+        let scoreDiv = document.querySelectorAll('#menuScore div');
+        scoreDiv.forEach(function(div){
+            let mode = div.id.split('_')[1];
+            let scores = (localStorage.getItem(mode) == null)?[]:JSON.parse(localStorage.getItem(mode));
+            scores.sort(sortByScore);
+            let list = document.createElement('ol');
+            if(scores.length == 0){
+                let li = document.createElement('li');
+                li.textContent = 'Aucun score enregistré';
+                list.appendChild(li);
+            }else{
+                for (var i = 0; i < 3; i++) {
+                    console.log(scores);
+                    let li = document.createElement('li');
+                    if(scores.length > i){
+                        let userTxt = scores[i].user;
+                        li.innerHTML = userTxt.bold() + ' : '+ scores[i].score;
+                        list.appendChild(li);
+                    }
+                }
+                div.appendChild(list);
+            }
+        });
+    }else{
+        console.log('localStorage n\'est pas supporté');
+    }
 }
 
 function populateMenu() {

@@ -213,6 +213,14 @@ body{
 	align-items: center;
 }
 
+#menuScore ul{
+	list-style-type: none;
+}
+
+#menuScore li{
+	margin-left : 25px;
+}
+
 	/* MENU ENDGAME*/
 
 #menu.endGame{
