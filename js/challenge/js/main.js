@@ -2,10 +2,10 @@
 
 var shapesInfo = [];
 var gameMode = [
-    {'name': 'Noob', 'shapes': 20, 'bomb': 1, 'time': -1, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
+    {'name': 'Noob', 'shapes': 20, 'bomb': 3, 'time': 60, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
     {'name': 'Hardcore', 'shapes': 80, 'bomb': 20, 'time': 45, 'speed': 10, 'desc': 'Presque un mode pour les vrais joueurs'},
     {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 30, 'desc': 'Enfin un vrai mode de jeu'},
-    {'name': 'Infini', 'shapes': 100, 'bomb': 30, 'time': 0, 'speed': 10, 'desc': 'Renouvellement continu, vitesse incrémentale, temps entre chaque cibles de plus en plus réduit.'}
+    // TODO : {'name': 'Infini', 'shapes': 100, 'bomb': 30, 'time': 0, 'speed': 10, 'desc': 'Renouvellement continu, vitesse incrémentale, temps entre chaque cibles de plus en plus réduit.'}
 ];
 var game = {
     'start': false,
@@ -82,7 +82,10 @@ function createShape(i, shape){
         'size' : parseInt(newShape.style.height.slice(0, -2), 10),
         'moveTop' : random(0, 1),
         'moveLeft' : random(0, 1),
-        'type' : shape
+        'type' : shape,
+        'animations' : null,
+        'currentAnimation' : null,
+        'animListener' : null
     };
 
     newShape.addEventListener("click", destroyShape, {capture:false});
@@ -211,51 +214,52 @@ function generateAnime(id){
     let moveLeft = Boolean(shapesInfo[id].moveLeft);
     let moveTop = Boolean(shapesInfo[id].moveTop);
 
-    console.log("----------------");
-    console.log("SHAPE "+id);
-
-    console.log("board "+board.clientHeight);
-
-    for(var i = 0; i < 4; i++){
-        end[i] = calcAnimation(moveLeft, moveTop, start);
+    end[0] = start;
+    for(var i = 1; i <= 4; i++){
+        end[i] = calcAnimation(moveLeft, moveTop, end[i-1]);
 
         let anim = '';
         anim += (moveTop)?'T':'B';
         anim += (moveLeft)?'L':'R';
 
-        console.log('anim '+i+' : '+start.x+'/'+start.y+' ==('+anim+')==> '+end[i].x+'/'+end[i].y);
-
-        start = end[i];
-
         if(end[i].x == 0 || end[i].x == board.clientWidth){
             moveLeft = !moveLeft;
-            console.log('swap Left/Right');
         }
         if(end[i].y == 0 || end[i].y == board.clientHeight){
             moveTop = !moveTop;
-            console.log('swap Top/Bottom');
         }
     }
 
-    var shapeDiv = document.querySelector("#shape_"+id);
-    shapeDiv.animate([
-        {left: start.x+'px', top: start.y+'px'},
-        {left: end[0].x+'px', top: end[0].y+'px'},
-        {left: end[1].x+'px', top: end[1].y+'px'},
-        {left: end[2].x+'px', top: end[2].y+'px'},
-        {left: end[3].x+'px', top: end[3].y+'px'}
-    ], {
-        duration: 5000,
-        iterations: Infinity,
-        direction: 'normal'
-    });
+    let distance = [];
+    let distanceTotal = 0;
+    for (let i = 0; i < end.length; i++) {
+        let s = end[i];
+        let e = (i == end.length - 1)?end[0]:end[i+1];
+        let dx = (s.x > e.x)?s.x-e.x:e.x-s.x;
+        let dy = (s.y > e.y)?s.y-e.y:e.y-s.y;
+        distance[i] = Math.sqrt(Math.pow(dx, 2)+Math.pow(dy, 2));
+        distanceTotal += distance[i];
+    }
 
-    // console.log("left : "+shape.moveLeft);
-    // console.log("top : "+shape.moveTop);
+    let percentTotal = 0;
 
-    // console.log("distance : "+dTop+"/"+dLeft);
-    console.log(end);
-    console.log("----------------");
+    let keyFrames = '@keyframes anim_'+id+' { ';
+    keyFrames += '0% {left: '+end[0].x+'px; top: '+end[0].y+'px;}';
+
+    for (let i = 1; i < distance.length; i++) {
+        let percent = Math.floor((distance[i-1]*100)/distanceTotal);
+        percentTotal += percent;
+        keyFrames += percentTotal+'% {left: '+end[i].x+'px; top: '+end[i].y+'px;}';
+    }
+
+
+
+    let style = document.querySelector('style');
+    keyFrames += '}';
+    style.innerHTML += keyFrames;
+
+    let shapeDiv = document.querySelector("#shape_"+id);
+    shapeDiv.style.animation = 'anim_'+id+' 20s linear infinite';
 }
 
 function init(){
@@ -350,31 +354,6 @@ function initMenu(){
                 console.log('view score : ' + idSplit[1]);
             }
         });
-    });
-}
-
-function moveShape(){
-    let shapes = document.querySelectorAll(".shape");
-
-    shapes.forEach(function(shape){
-        let i = shape.id.slice(6);
-        shapesInfo[i].x += (shapesInfo[i].moveLeft)?-game.mode.speed:game.mode.speed;
-        shapesInfo[i].y += (shapesInfo[i].moveTop)?-game.mode.speed:game.mode.speed;
-
-        if(shapesInfo[i].x <= shapesInfo[i].size){
-            shapesInfo[i].moveLeft = 0;
-        }else if(shapesInfo[i].x >= board.clientWidth - shapesInfo[i].size){
-            shapesInfo[i].moveLeft = 1;
-        }
-
-        if(shapesInfo[i].y <= shapesInfo[i].size){
-            shapesInfo[i].moveTop = 0;
-        }else if(shapesInfo[i].y >= board.clientHeight - shapesInfo[i].size){
-            shapesInfo[i].moveTop = 1;
-        }
-
-        shape.style.left =  shapesInfo[i].x+"px";
-        shape.style.top = shapesInfo[i].y+"px";
     });
 }
 
