@@ -26,6 +26,31 @@ var sfx = {
 
 init();
 
+function calcAnimation(id){
+    let moveLeft = Boolean(shapesInfo[id].moveLeft);
+    let moveTop = Boolean(shapesInfo[id].moveTop);
+
+    let end = [];
+    end[0] = {'x': shapesInfo[id].x, 'y':shapesInfo[id].y};
+
+    for(var i = 1; i <= 4; i++){
+        end[i] = calcMove(moveLeft, moveTop, end[i-1]);
+
+        let anim = '';
+        anim += (moveTop)?'T':'B';
+        anim += (moveLeft)?'L':'R';
+
+        if(end[i].x == 0 || end[i].x == board.clientWidth){
+            moveLeft = !moveLeft;
+        }
+        if(end[i].y == 0 || end[i].y == board.clientHeight){
+            moveTop = !moveTop;
+        }
+    }
+
+    return end;
+}
+
 function calcEndScore(){
     let div = document.querySelector('#endScoreTotalCalc');
 
@@ -54,10 +79,48 @@ function calcEndSubScore(line){
     updateEndScore(score, scoreField);
 
     return score;
+}
 
-    // TODO:
-    // IF BOMB DIE MALUS
-    // BONUS IF ALL CLEAR
+function calcMove(moveLeft, moveTop, start){
+    let end = {'x': -1, 'y': -1};
+    let board = document.querySelector('#board');
+    let dX = board.clientWidth - start.x;
+    let dY = board.clientHeight - start.y;
+
+    if(moveTop && moveLeft){
+        if(start.x > start.y){
+            end.x = start.x - start.y;
+            end.y = 0;
+        }else{
+            end.x = 0;
+            end.y = start.y - start.x;
+        }
+    }else if(moveTop && !moveLeft){
+        if(dX > start.y){
+            end.x = start.x + start.y;
+            end.y = 0;
+        }else{
+            end.x = board.clientWidth;
+            end.y = start.y - dX;
+        }
+    }else if(!moveTop && moveLeft){
+        if(start.x < dY){
+            end.x = 0;
+            end.y = start.x + start.y;
+        }else{
+            end.x = start.x - dY;
+            end.y = board.clientHeight;
+        }
+    }else if(!moveTop && !moveLeft){
+        if(dX < dY){
+            end.x = board.clientWidth;
+            end.y = start.y + dX;
+        }else{
+            end.x = start.x + dY;
+            end.y = board.clientHeight;
+        }
+    }
+    return end;
 }
 
 function clearBoard(){
@@ -164,72 +227,16 @@ function gameStatus(){
     }
 }
 
-function calcAnimation(moveLeft, moveTop, start){
-    let end = {'x': -1, 'y': -1};
-    let board = document.querySelector('#board');
-    let dX = board.clientWidth - start.x;
-    let dY = board.clientHeight - start.y;
+function generateAnime(id){
+    let end = calcAnimation(id);
 
-    if(moveTop && moveLeft){
-        if(start.x > start.y){
-            end.x = start.x - start.y;
-            end.y = 0;
-        }else{
-            end.x = 0;
-            end.y = start.y - start.x;
-        }
-    }else if(moveTop && !moveLeft){
-        if(dX > start.y){
-            end.x = start.x + start.y;
-            end.y = 0;
-        }else{
-            end.x = board.clientWidth;
-            end.y = start.y - dX;
-        }
-    }else if(!moveTop && moveLeft){
-        if(start.x < dY){
-            end.x = 0;
-            end.y = start.x + start.y;
-        }else{
-            end.x = start.x - dY;
-            end.y = board.clientHeight;
-        }
-    }else if(!moveTop && !moveLeft){
-        if(dX < dY){
-            end.x = board.clientWidth;
-            end.y = start.y + dX;
-        }else{
-            end.x = start.x + dY;
-            end.y = board.clientHeight;
-        }
-    }
-    return end;
+    document.querySelector('style').innerHTML += generateKeyframes(end, id);
+
+    let shapeDiv = document.querySelector("#shape_"+id);
+    shapeDiv.style.animation = 'anim_'+id+' 20s linear infinite';
 }
 
-function generateAnime(id){
-    let board = document.querySelector('#board');
-    let start = {'x': shapesInfo[id].x, 'y':shapesInfo[id].y};
-    let end = [];
-
-    let moveLeft = Boolean(shapesInfo[id].moveLeft);
-    let moveTop = Boolean(shapesInfo[id].moveTop);
-
-    end[0] = start;
-    for(var i = 1; i <= 4; i++){
-        end[i] = calcAnimation(moveLeft, moveTop, end[i-1]);
-
-        let anim = '';
-        anim += (moveTop)?'T':'B';
-        anim += (moveLeft)?'L':'R';
-
-        if(end[i].x == 0 || end[i].x == board.clientWidth){
-            moveLeft = !moveLeft;
-        }
-        if(end[i].y == 0 || end[i].y == board.clientHeight){
-            moveTop = !moveTop;
-        }
-    }
-
+function generateKeyframes(end, id){
     let distance = [];
     let distanceTotal = 0;
     for (let i = 0; i < end.length; i++) {
@@ -243,23 +250,17 @@ function generateAnime(id){
 
     let percentTotal = 0;
 
-    let keyFrames = '@keyframes anim_'+id+' { ';
-    keyFrames += '0% {left: '+end[0].x+'px; top: '+end[0].y+'px;}';
+    let keyframes = '@keyframes anim_'+id+' { ';
+    keyframes += '0% {left: '+end[0].x+'px; top: '+end[0].y+'px;}';
 
     for (let i = 1; i < distance.length; i++) {
         let percent = Math.floor((distance[i-1]*100)/distanceTotal);
         percentTotal += percent;
-        keyFrames += percentTotal+'% {left: '+end[i].x+'px; top: '+end[i].y+'px;}';
+        keyframes += percentTotal+'% {left: '+end[i].x+'px; top: '+end[i].y+'px;}';
     }
 
-
-
-    let style = document.querySelector('style');
-    keyFrames += '}';
-    style.innerHTML += keyFrames;
-
-    let shapeDiv = document.querySelector("#shape_"+id);
-    shapeDiv.style.animation = 'anim_'+id+' 20s linear infinite';
+    keyframes += '}';
+    return keyframes;
 }
 
 function init(){
