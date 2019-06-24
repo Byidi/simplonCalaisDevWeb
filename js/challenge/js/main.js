@@ -520,11 +520,13 @@ function populateHightScore(){
                 list.appendChild(li);
             }else{
                 for (var i = 0; i < 3; i++) {
-                    console.log(scores);
                     let li = document.createElement('li');
                     if(scores.length > i){
-                        let userTxt = scores[i].user;
-                        li.innerHTML = userTxt.bold() + ' : '+ scores[i].score;
+                        let userTxt = scores[i].user.bold();
+                        if(i == 0){userTxt = userTxt.fontcolor('gold');}
+                        else if( i == 1){userTxt = userTxt.fontcolor('silver');}
+                        else if( i == 2){userTxt = userTxt.fontcolor('bronze');}
+                        li.innerHTML = userTxt + ' : '+ scores[i].score;
                         list.appendChild(li);
                     }
                 }
@@ -706,6 +708,7 @@ function updateEndScore(score, resultChild){
     let affScore = 0;
     let scoreInterval = setInterval(function(){
         if(affScore == score){
+            resultChild.textContent = affScore;
             clearInterval(scoreInterval);
             if(resultChild.parentNode.id == 'endScoreTotalCalc'){
                 saveScore();
