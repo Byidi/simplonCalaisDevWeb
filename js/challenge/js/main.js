@@ -2,7 +2,7 @@
 
 var shapesInfo = [];
 var gameMode = [
-    {'name': 'Noob', 'shapes': 20, 'bomb': 3, 'time': 60, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
+    {'name': 'Noob', 'shapes': 20, 'bomb': 3, 'time': -1, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
     {'name': 'Hardcore', 'shapes': 80, 'bomb': 20, 'time': 45, 'speed': 10, 'desc': 'Presque un mode pour les vrais joueurs'},
     {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 30, 'desc': 'Enfin un vrai mode de jeu'},
     // TODO : {'name': 'Infini', 'shapes': 100, 'bomb': 30, 'time': 0, 'speed': 10, 'desc': 'Renouvellement continu, vitesse incrémentale, temps entre chaque cibles de plus en plus réduit.'}
@@ -134,7 +134,35 @@ function createShape(i, shape){
     let newShape = document.createElement('div');
 
     newShape.classList.add('shape');
-    newShape.classList.add(shape);
+    switch(shape){
+        case 'bomb':
+            newShape.classList.add('crane', 'bomb');
+            let oeilG = document.createElement('div');
+            oeilG.classList.add('oeil','gauche');
+            let oeilD = document.createElement('div');
+            oeilD.classList.add('oeil','droit');
+            let nez = document.createElement('div');
+            nez.classList.add('nez');
+            let flexDent = document.createElement('div');
+            flexDent.classList.add('flexDent');
+            let dentG = document.createElement('div');
+            dentG.classList.add('dent','gauche');
+            let dentM = document.createElement('div');
+            dentM.classList.add('dent','droit');
+            let dentD = document.createElement('div');
+            dentD.classList.add('dent','droit');
+            flexDent.appendChild(dentG);
+            flexDent.appendChild(dentM);
+            flexDent.appendChild(dentD);
+            newShape.appendChild(oeilG);
+            newShape.appendChild(oeilD);
+            newShape.appendChild(nez);
+            newShape.appendChild(flexDent);
+        break;
+        default:
+            newShape.classList.add(shape);
+        break;
+    }
     newShape.id = "shape_"+i;
 
     document.querySelector('#board').appendChild(newShape);
@@ -665,7 +693,13 @@ function setAttr(node){
 
     node.style.transform = 'rotate('+random(0,360)+'deg)';
 
-    node.style.backgroundColor = "rgb("+random(0,255)+", "+random(0,255)+", "+random(0,255)+")";
+    let color = "rgb("+random(0,255)+", "+random(0,255)+", "+random(0,255)+")";
+    node.style.backgroundColor = color;
+    if(node.classList.contains('crane')){
+        node.querySelectorAll('.dent').forEach(function(d){
+            d.style.backgroundColor = color;
+        });
+    }
 
     setTimeout(function(){node.style.transition = 'top .1s, left .1s, width 1s, height 1s, opacity 1s';},1000);
 }
