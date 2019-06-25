@@ -224,6 +224,10 @@ function destroyShape(node){
         }
         updateScore();
         setTimeout(removeNode, 1000, shape);
+        if(game.scoreKilled % 10){
+            let lastId = document.querySelector('#board shape:last-child');
+
+        }
     }
 }
 
@@ -700,8 +704,6 @@ function setAttr(node){
             d.style.backgroundColor = color;
         });
     }
-
-    setTimeout(function(){node.style.transition = 'top .1s, left .1s, width 1s, height 1s, opacity 1s';},1000);
 }
 
 function startGame(){
