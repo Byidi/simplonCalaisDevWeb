@@ -2,9 +2,9 @@
 
 var shapesInfo = [];
 var gameMode = [
-    {'name': 'Noob', 'shapes': 20, 'bomb': 3, 'time': 60, 'speed': 5, 'desc': 'Le mode de jeu des petits joueur'},
-    {'name': 'Hardcore', 'shapes': 80, 'bomb': 20, 'time': 45, 'speed': 10, 'desc': 'Presque un mode pour les vrais joueurs'},
-    {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 30, 'desc': 'Enfin un vrai mode de jeu'},
+    {'name': 'Noob', 'shapes': 20, 'bomb': 3, 'time': 60, 'speed': 20, 'desc': 'Le mode de jeu des petits joueur'},
+    {'name': 'Hardcore', 'shapes': 80, 'bomb': 20, 'time': 45, 'speed': 15, 'desc': 'Presque un mode pour les vrais joueurs'},
+    {'name': 'Ultraviolence', 'shapes': 200, 'bomb': 70, 'time': 30, 'speed': 10, 'desc': 'Enfin un vrai mode de jeu'},
     // TODO : {'name': 'Infini', 'shapes': 100, 'bomb': 30, 'time': 0, 'speed': 10, 'desc': 'Renouvellement continu, vitesse incrémentale, temps entre chaque cibles de plus en plus réduit.'}
 ];
 var game = {
@@ -16,7 +16,8 @@ var game = {
 var interval = {
     'moveShape': null,
     'timer': null,
-    'gameStatus': null
+    'gameStatus': null,
+    'ufo': null
 };
 var sfx = {
     'pew': new Audio('./audio/pew.mp3'),
@@ -125,6 +126,32 @@ function calcMove(moveLeft, moveTop, start){
     return end;
 }
 
+function checkUfo(){
+    let rdm = random(1, 100);
+    if(rdm % 10 == 0){
+        let ufos = document.querySelectorAll('.ufo');
+        if(ufos.length == 0){
+            if(interval.ufo != null){
+                clearTimeout(interval.ufo);
+            }
+            ufos.forEach(function(ufo){
+                ufo.remove();
+            });
+        }
+        let lastId = document.querySelector('.shape:last-child').id.split('_')[1];
+        let newId = parseInt(lastId,10) + 1;
+        
+        createShape(newId, 'ufo');
+        interval.ufo = setTimeout(function(){
+            let ufos = document.querySelectorAll('.ufo');
+            ufos.forEach(function(ufo){
+                ufo.remove();
+            });
+            clearTimeout(interval.ufo);
+        }, 5000);
+    }
+}
+
 function clearBoard(){
     let board = document.querySelector("#board");
     removeChild(board);
@@ -142,6 +169,15 @@ function createShape(i, shape){
         break;
         case 'meeple':
             newShape = createShapeMeeple();
+        break;
+        case 'octopus':
+            newShape = createShapeOctopus();
+        break;
+        case 'spider':
+            newShape = createShapeSpider();
+        break;
+        case 'ufo':
+            newShape = createShapeUfo();
         break;
         case 'ghost':
             newShape = createShapeGhost();
@@ -270,6 +306,54 @@ function createShapeMeeple(){
     return meeple;
 }
 
+function createShapeOctopus(){
+    let octopus = document.createElement('div');
+    let nose = document.createElement('div');
+    let eyebrow = document.createElement('div');
+    let head = document.createElement('div');
+    let shoulderL = document.createElement('div');
+    let shoulderR = document.createElement('div');
+    let body = document.createElement('div');
+    let tentacleTL = document.createElement('div');
+    let tentacleTR = document.createElement('div');
+    let tentacleML = document.createElement('div');
+    let mouth = document.createElement('div');
+    let tentacleMR = document.createElement('div');
+    let tentacleBL = document.createElement('div');
+    let tentacleBR = document.createElement('div');
+
+    octopus.classList.add('octopus');
+    nose.classList.add('nose');
+    eyebrow.classList.add('eyebrow');
+    head.classList.add('head');
+    shoulderL.classList.add('shoulder', 'left');
+    shoulderR.classList.add('shoulder', 'right');
+    body.classList.add('body');
+    tentacleTL.classList.add('tentacle', 'top', 'left');
+    tentacleTR.classList.add('tentacle', 'top', 'right');
+    tentacleML.classList.add('tentacle', 'middle', 'left');
+    mouth.classList.add('mouth');
+    tentacleMR.classList.add('tentacle', 'middle', 'right');
+    tentacleBL.classList.add('tentacle', 'bottom', 'left');
+    tentacleBR.classList.add('tentacle', 'bottom', 'right');
+
+    octopus.appendChild(nose);
+    octopus.appendChild(eyebrow);
+    octopus.appendChild(head);
+    octopus.appendChild(shoulderL);
+    octopus.appendChild(shoulderR);
+    octopus.appendChild(body);
+    octopus.appendChild(tentacleTL);
+    octopus.appendChild(tentacleTR);
+    octopus.appendChild(tentacleML);
+    octopus.appendChild(mouth);
+    octopus.appendChild(tentacleMR);
+    octopus.appendChild(tentacleBL);
+    octopus.appendChild(tentacleBR);
+
+    return octopus;
+}
+
 function createShapeInvader(){
     let invader = document.createElement('div');
     let nose = document.createElement('div');
@@ -322,6 +406,60 @@ function createShapeInvader(){
     invader.appendChild(earTopRight);
 
     return invader;
+}
+
+function createShapeSpider(){
+    let spider = document.createElement('div');
+    let nose = document.createElement('div');
+    let eyebrow = document.createElement('div');
+    let earL = document.createElement('div');
+    let earR = document.createElement('div');
+    let mouth = document.createElement('div');
+    let shoulderL= document.createElement('div');
+    let shoulderR = document.createElement('div');
+    let legL = document.createElement('div');
+    let legR = document.createElement('div');
+    let handL = document.createElement('div');
+    let handR = document.createElement('div');
+    let footL = document.createElement('div');
+    let footR = document.createElement('div');
+    let toothL = document.createElement('div');
+    let toothR = document.createElement('div');
+
+    spider.classList.add('spider');
+    nose.classList.add('nose');
+    eyebrow.classList.add('eyebrow');
+    earL.classList.add('ear', 'left');
+    earR.classList.add('ear', 'right');
+    mouth.classList.add('mouth');
+    shoulderL.classList.add('shoulder', 'left');
+    shoulderR.classList.add('shoulder', 'right');
+    legL.classList.add('leg', 'left');
+    legR.classList.add('leg', 'right');
+    handL.classList.add('hand', 'left');
+    handR.classList.add('hand', 'right');
+    footL.classList.add('hand', 'left');
+    footR.classList.add('hand', 'right');
+    toothL.classList.add('tooth', 'left');
+    toothR.classList.add('tooth', 'right');
+
+    spider.appendChild(nose);
+    spider.appendChild(eyebrow);
+    spider.appendChild(earL);
+    spider.appendChild(earR);
+    spider.appendChild(mouth);
+    spider.appendChild(shoulderL);
+    spider.appendChild(shoulderR);
+    spider.appendChild(legL);
+    spider.appendChild(legR);
+    spider.appendChild(handL);
+    spider.appendChild(handR);
+    spider.appendChild(footL);
+    spider.appendChild(footR);
+    spider.appendChild(toothL);
+    spider.appendChild(toothR);
+
+    return spider;
 }
 
 function createShapeSquid(){
@@ -381,6 +519,66 @@ function createShapeSquid(){
     return squid;
 }
 
+function createShapeUfo(){
+    let ufo = document.createElement('div');
+    let middleM = document.createElement('div');
+    let middleL = document.createElement('div');
+    let middleR = document.createElement('div');
+    let middleLL = document.createElement('div');
+    let middleRR = document.createElement('div');
+    let head = document.createElement('div');
+    let topsideL = document.createElement('div');
+    let topsideR = document.createElement('div');
+    let top = document.createElement('div');
+    let body = document.createElement('div');
+    let botsideL = document.createElement('div');
+    let botsideR = document.createElement('div');
+    let reactorL = document.createElement('div');
+    let reactorM = document.createElement('div');
+    let reactorR = document.createElement('div');
+    let fireL = document.createElement('div');
+    let fireR = document.createElement('div');
+
+    ufo.classList.add('ufo');
+    middleM.classList.add('middle', 'mid');
+    middleL.classList.add('middle', 'left');
+    middleR.classList.add('middle', 'right');
+    middleLL.classList.add('middle', 'fullleft');
+    middleRR.classList.add('middle', 'fullright');
+    head.classList.add('head');
+    topsideL.classList.add('topside', 'left');
+    topsideR.classList.add('topside', 'right');
+    top.classList.add('top');
+    body.classList.add('body');
+    botsideL.classList.add('botside', 'left');
+    botsideR.classList.add('botside', 'right');
+    reactorL.classList.add('reactor', 'left');
+    reactorM.classList.add('reactor', 'middle');
+    reactorR.classList.add('reactor', 'right');
+    fireL.classList.add('fire', 'left');
+    fireR.classList.add('fire', 'right');
+
+    ufo.appendChild(middleM);
+    ufo.appendChild(middleL);
+    ufo.appendChild(middleR);
+    ufo.appendChild(middleLL);
+    ufo.appendChild(middleRR);
+    ufo.appendChild(head);
+    ufo.appendChild(topsideL);
+    ufo.appendChild(topsideR);
+    ufo.appendChild(top);
+    ufo.appendChild(body);
+    ufo.appendChild(botsideL);
+    ufo.appendChild(botsideR);
+    ufo.appendChild(reactorL);
+    ufo.appendChild(reactorM);
+    ufo.appendChild(reactorR);
+    ufo.appendChild(fireL);
+    ufo.appendChild(fireR);
+
+    return ufo;
+}
+
 function createTimer(){
     let board = document.querySelector("#board");
 
@@ -418,13 +616,13 @@ function destroyShape(node){
         shape.style.zIndex = "1";
         if(shape.classList.contains('bomb')){
             stopGame('bomb');
+        }else if(shape.classList.contains('ufo')){
+            let time = parseInt(document.querySelector('#timer span').textContent, 10);
+            time += 5
+            document.querySelector('#timer span').textContent = time;
         }
         updateScore();
         setTimeout(removeNode, 1000, shape);
-        if(game.scoreKilled % 10){
-            let lastId = document.querySelector('#board shape:last-child');
-
-        }
     }
 }
 
@@ -464,7 +662,7 @@ function generateAnime(id){
     document.querySelector('style').innerHTML += generateKeyframes(end, id);
 
     let shapeDiv = document.querySelector("#shape_"+id);
-    shapeDiv.style.animation = 'anim_'+id+' 20s linear infinite';
+    shapeDiv.style.animation = 'anim_'+id+' '+game.mode.speed+'s linear infinite';
 }
 
 function generateKeyframes(end, id){
@@ -550,7 +748,7 @@ function initGame(mode){
         if(i < game.mode.bomb){
             createShape(i, 'ghost');
         }else{
-            let shapes = ['invader', 'squid', 'meeple'];
+            let shapes = ['invader', 'squid', 'meeple', 'octopus', 'spider'];
             let shape = shapes[random(0, shapes.length - 1)];
             createShape(i, shape);
         }
@@ -965,6 +1163,7 @@ function updateScore(){
 }
 
 function updateTimer(){
+    checkUfo();
     let timerCmp = document.querySelector("#info #timer span");
     let time = parseInt(timerCmp.textContent, 10);
     time--;

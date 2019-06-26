@@ -690,6 +690,335 @@ body{
 	right: -200%;
 }
 
+	/* OCTOPUS */
+
+.octopus{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 80px;
+	left: 100px;
+	background-color: red;
+}
+
+.octopus div{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: inherit;
+}
+
+.octopus .nose{
+	width: 200%;
+	top: 0%;
+	left: 0%;
+}
+
+.octopus .eyebrow{
+	width: 600%;
+	top: -100%;
+	left: -200%;
+}
+
+.octopus .head{
+	width: 400%;
+	top: -200%;
+	left: -100%;
+}
+
+.octopus .shoulder{
+	width: 200%;
+	top: 0%;
+}
+
+.octopus .shoulder.left{
+	left: -300%;
+}
+
+.octopus .shoulder.right{
+	right: -400%;
+}
+
+.octopus .body{
+	width: 800%;
+	height: 200%;
+	top: 100%;
+	left: -300%;
+}
+
+.octopus .tentacle{
+	width: 200%;
+}
+
+.octopus .tentacle.top{
+	top: 300%;
+}
+
+.octopus .tentacle.top.left{
+	left: -200%;
+}
+
+.octopus .tentacle.top.right{
+	right: -300%;
+}
+
+.octopus .mouth{
+	width: 200%;
+	top: 400%;
+	left: 0%;
+}
+
+.octopus .tentacle.middle{
+	top: 400%;
+}
+
+.octopus .tentacle.middle.left{
+	left: -300%;
+}
+
+.octopus .tentacle.middle.right{
+	right: -400%;
+}
+
+.octopus .tentacle.bottom{
+	top: 500%;
+}
+
+.octopus .tentacle.bottom.left{
+	left: -400%;
+}
+
+.octopus .tentacle.bottom.right{
+	right: -500%;
+}
+
+	/* SPIDER */
+
+.spider{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 80px;
+	left: 100px;
+	background-color: orange;
+}
+
+.spider div{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: inherit;
+}
+
+.spider .nose{
+	left: 0%;
+	right: 0%;
+}
+
+.spider .eyebrow{
+	width: 500%;
+	top: -100%;
+	left: -200%;
+}
+
+.spider .ear{
+	top: -200%;
+}
+
+.spider .ear.left{
+	left: -100%;
+}
+
+.spider .ear.right{
+	right: -100%;
+}
+
+.spider .mouth{
+	width: 500%;
+	top: 100%;
+	left: -200%;
+}
+
+.spider .shoulder{
+	top: 0%;
+}
+
+.spider .shoulder.left{
+	left: -200%;
+}
+
+.spider .shoulder.right{
+	right: -200%;
+}
+
+.spider .leg{
+	height: 400%;
+	top: 0%;
+}
+
+.spider .leg.left{
+	left: -300%;
+}
+
+.spider .leg.right{
+	right: -300%;
+}
+
+.spider .hand{
+	height: 200%;
+	top: -100%;
+}
+
+.spider .hand.left{
+	left: -400%;
+}
+
+.spider .hand.right{
+	right: -400%;
+}
+
+.spider .foot{
+	top: 300%;
+}
+
+.spider .foot.left{
+	left: -400%;
+}
+
+.spider .foot.right{
+	right: -400%;
+}
+
+.spider .tooth{
+	top: 200%;
+}
+
+.spider .tooth.left{
+	left: -100%;
+}
+
+.spider .tooth.right{
+	right: -100%;
+}
+
+	/* UFO */
+
+.ufo{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 80px;
+	left: 200px;
+	background-color: purple;
+}
+
+.ufo div{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: inherit;
+}
+
+.ufo .middle{
+	top: 0%;
+}
+
+.ufo .middle.mid{
+	left: 0%;
+}
+
+.ufo .middle.left{
+	left: -200%;
+}
+
+.ufo .middle.right{
+	right: -200%;
+}
+
+.ufo .middle.fullleft{
+	width: 300%;
+	left: -600%;
+}
+
+.ufo .middle.fullright{
+	width: 300%;
+	right: -600%;
+}
+
+.ufo .head{
+	width: 700%;
+	height: 200%;
+	top: -200%;
+	left: -300%;
+}
+
+.ufo .topside{
+	width: 200%;
+	top: -100%;
+}
+
+.ufo .topside.left{
+	left: -500%;
+}
+
+.ufo .topside.right{
+	right: -500%;
+}
+
+.ufo .top{
+	width: 500%;
+	top: -300%;
+	left: -200%;
+}
+
+.ufo .body{
+	height: 200%;
+	width: 1500%;
+	top: 100%;
+	left: -700%;
+}
+
+.ufo .botside{
+	top: 200%;
+}
+
+.ufo .botside.left{
+	left: -800%;
+}
+
+.ufo .botside.right{
+	right: -800%;
+}
+
+.ufo .reactor{
+	width: 300%;
+	top: 300%;
+}
+
+.ufo .reactor.left{
+	left: -600%;
+}
+
+.ufo .reactor.middle{
+	left: -100%;
+}
+
+.ufo .reactor.right{
+	right: -600%;
+}
+
+.ufo .fire{
+	top: 400%;
+}
+
+.ufo .fire.left{
+	left: -500%;
+}
+
+.ufo .fire.right{
+	right: -500%;
+}
+
 	/* RAINBOW */
 
 .rainbow{
