@@ -140,7 +140,7 @@ function checkUfo(){
         }
         let lastId = document.querySelector('.shape:last-child').id.split('_')[1];
         let newId = parseInt(lastId,10) + 1;
-        
+
         createShape(newId, 'ufo');
         interval.ufo = setTimeout(function(){
             let ufos = document.querySelectorAll('.ufo');
@@ -906,7 +906,7 @@ function populateEndGameMenuLine(line, reason=''){
                     mul.textContent = game.mode.speed;
                 break;
                 case 'bomb':
-                    text.textContent = 'Bombe explosée : ';
+                    text.textContent = 'Fantôme tué : ';
                     nb.textContent = 1;
                     mul.textContent = -100 * game.mode.time;
                 break;
