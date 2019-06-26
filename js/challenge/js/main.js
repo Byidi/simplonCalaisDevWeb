@@ -131,38 +131,24 @@ function clearBoard(){
 }
 
 function createShape(i, shape){
-    let newShape = document.createElement('div');
+    let newShape;
 
-    newShape.classList.add('shape');
     switch(shape){
-        case 'bomb':
-            newShape.classList.add('crane', 'bomb');
-            let oeilG = document.createElement('div');
-            oeilG.classList.add('oeil','gauche');
-            let oeilD = document.createElement('div');
-            oeilD.classList.add('oeil','droit');
-            let nez = document.createElement('div');
-            nez.classList.add('nez');
-            let flexDent = document.createElement('div');
-            flexDent.classList.add('flexDent');
-            let dentG = document.createElement('div');
-            dentG.classList.add('dent','gauche');
-            let dentM = document.createElement('div');
-            dentM.classList.add('dent','droit');
-            let dentD = document.createElement('div');
-            dentD.classList.add('dent','droit');
-            flexDent.appendChild(dentG);
-            flexDent.appendChild(dentM);
-            flexDent.appendChild(dentD);
-            newShape.appendChild(oeilG);
-            newShape.appendChild(oeilD);
-            newShape.appendChild(nez);
-            newShape.appendChild(flexDent);
+        case 'invader':
+            newShape = createShapeInvader();
         break;
-        default:
-            newShape.classList.add(shape);
+        case 'squid':
+            newShape = createShapeSquid();
+        break;
+        case 'meeple':
+            newShape = createShapeMeeple();
+        break;
+        case 'ghost':
+            newShape = createShapeGhost();
+            newShape.classList.add('bomb');
         break;
     }
+    newShape.classList.add('shape');
     newShape.id = "shape_"+i;
 
     document.querySelector('#board').appendChild(newShape);
@@ -183,6 +169,216 @@ function createShape(i, shape){
 
     newShape.addEventListener("click", destroyShape, {capture:false});
     generateAnime(i);
+}
+
+function createShapeGhost(){
+    let ghost =  document.createElement('div');
+    let nose = document.createElement('div');
+    let headbot = document.createElement('div');
+    let headtop = document.createElement('div');
+    let shoulderLeft = document.createElement('div');
+    let shoulderRight = document.createElement('div');
+    let body = document.createElement('div');
+    let footLL = document.createElement('div');
+    let footL = document.createElement('div');
+    let footM = document.createElement('div');
+    let footR = document.createElement('div');
+    let footRR = document.createElement('div');
+
+    ghost.classList.add('ghost');
+    nose.classList.add('nose');
+    headbot.classList.add('headbot');
+    headtop.classList.add('headtop');
+    shoulderLeft.classList.add('shoulder', 'left');
+    shoulderRight.classList.add('shoulder', 'right');
+    body.classList.add('body');
+    footLL.classList.add('foot', 'fullleft');
+    footL.classList.add('foot', 'left');
+    footM.classList.add('foot', 'middle');
+    footR.classList.add('foot', 'right');
+    footRR.classList.add('foot', 'fullright');
+
+    ghost.appendChild(nose);
+    ghost.appendChild(headbot);
+    ghost.appendChild(headtop);
+    ghost.appendChild(shoulderLeft);
+    ghost.appendChild(shoulderRight);
+    ghost.appendChild(body);
+    ghost.appendChild(footLL);
+    ghost.appendChild(footL);
+    ghost.appendChild(footM);
+    ghost.appendChild(footR);
+    ghost.appendChild(footRR);
+
+    return ghost;
+}
+
+function createShapeMeeple(){
+    let meeple= document.createElement('div');
+    let nose= document.createElement('div');
+    let eyebrow = document.createElement('div');
+    let earBL= document.createElement('div');
+    let earBR= document.createElement('div');
+    let earTL = document.createElement('div');
+    let earTR = document.createElement('div');
+    let shoulderLeft= document.createElement('div');
+    let shoulderRight = document.createElement('div');
+    let mouth = document.createElement('div');
+    let armLeft = document.createElement('div');
+    let armRight = document.createElement('div');
+    let body = document.createElement('div');
+    let legLeft = document.createElement('div');
+    let legRight = document.createElement('div');
+    let footLeft = document.createElement('div');
+    let footRight = document.createElement('div');
+
+    meeple.classList.add('meeple');
+    nose.classList.add('nose');
+    eyebrow.classList.add('eyebrow');
+    earBL.classList.add('ear', 'bottom', 'left');
+    earBR.classList.add('ear', 'bottom', 'right');
+    earTL.classList.add('ear', 'top', 'left');
+    earTR.classList.add('ear', 'top', 'right');
+    shoulderLeft.classList.add('shoulder', 'left');
+    shoulderRight.classList.add('shoulder', 'right');
+    mouth.classList.add('mouth');
+    armLeft.classList.add('arm', 'left');
+    armRight.classList.add('arm', 'right');
+    body.classList.add('body');
+    legLeft.classList.add('leg', 'left');
+    legRight.classList.add('leg', 'right');
+    footLeft.classList.add('foot', 'left');
+    footRight.classList.add('foot', 'right');
+
+    meeple.appendChild(nose);
+    meeple.appendChild(eyebrow);
+    meeple.appendChild(earBL);
+    meeple.appendChild(earBR);
+    meeple.appendChild(earTL);
+    meeple.appendChild(earTR);
+    meeple.appendChild(shoulderLeft);
+    meeple.appendChild(shoulderRight);
+    meeple.appendChild(mouth);
+    meeple.appendChild(armLeft);
+    meeple.appendChild(armRight);
+    meeple.appendChild(body);
+    meeple.appendChild(legLeft);
+    meeple.appendChild(legRight);
+    meeple.appendChild(footLeft);
+    meeple.appendChild(footRight);
+
+    return meeple;
+}
+
+function createShapeInvader(){
+    let invader = document.createElement('div');
+    let nose = document.createElement('div');
+    let eyebrow = document.createElement('div');
+    let mouth = document.createElement('div');
+    let legLeft = document.createElement('div');
+    let legRight = document.createElement('div');
+    let shoulderLeft = document.createElement('div');
+    let shoulderRight = document.createElement('div');
+    let armLeft = document.createElement('div');
+    let armRight = document.createElement('div');
+    let footLeft = document.createElement('div');
+    let footRight = document.createElement('div');
+    let earBotLeft = document.createElement('div');
+    let earBotRight = document.createElement('div');
+    let earTopLeft = document.createElement('div');
+    let earTopRight = document.createElement('div');
+
+    invader.classList.add('invader');
+    nose.classList.add('nose');
+    eyebrow.classList.add('eyebrow');
+    mouth.classList.add('mouth');
+    legLeft.classList.add('leg', 'left');
+    legRight.classList.add('leg', 'right');
+    shoulderLeft.classList.add('shoulder', 'left');
+    shoulderRight.classList.add('shoulder', 'right');
+    armLeft.classList.add('arm', 'left');
+    armRight.classList.add('arm', 'right');
+    footLeft.classList.add('foot', 'left');
+    footRight.classList.add('foot', 'right');
+    earBotLeft.classList.add('ear', 'bottom', 'left');
+    earBotRight.classList.add('ear', 'bottom', 'right');
+    earTopLeft.classList.add('ear', 'top', 'left');
+    earTopRight.classList.add('ear', 'top', 'right');
+
+    invader.appendChild(nose);
+    invader.appendChild(eyebrow);
+    invader.appendChild(mouth);
+    invader.appendChild(legLeft);
+    invader.appendChild(legRight);
+    invader.appendChild(shoulderLeft);
+    invader.appendChild(shoulderRight);
+    invader.appendChild(armLeft);
+    invader.appendChild(armRight);
+    invader.appendChild(footLeft);
+    invader.appendChild(footRight);
+    invader.appendChild(earBotLeft);
+    invader.appendChild(earBotRight);
+    invader.appendChild(earTopLeft);
+    invader.appendChild(earTopRight);
+
+    return invader;
+}
+
+function createShapeSquid(){
+    let squid = document.createElement('div');
+    let nose = document.createElement('div');
+    let eyebrow = document.createElement('div');
+    let headbot = document.createElement('div');
+    let headtop = document.createElement('div');
+    let shoulderLeft = document.createElement('div');
+    let shoulderRight = document.createElement('div');
+    let mouth = document.createElement('div');
+    let tentacleTopLeft = document.createElement('div');
+    let tentacleTopRight = document.createElement('div');
+    let tentacleMidLeft = document.createElement('div');
+    let tentacleMidMid = document.createElement('div');
+    let tentacleMidRight = document.createElement('div');
+    let tentacleBotFullLeft = document.createElement('div');
+    let tentacleBotLeft = document.createElement('div');
+    let tentacleBotRight = document.createElement('div');
+    let tentacleBotFullRight = document.createElement('div');
+
+    squid.classList.add('squid');
+    nose.classList.add('nose');
+    eyebrow.classList.add('eyebrow');
+    headbot.classList.add('headbot');
+    headtop.classList.add('headtop');
+    shoulderLeft.classList.add('shoulder', 'left');
+    shoulderRight.classList.add('shoulder', 'right');
+    mouth.classList.add('mouth');
+    tentacleTopLeft.classList.add('tentacle', 'top', 'left');
+    tentacleTopRight.classList.add('tentacle', 'top', 'right');
+    tentacleMidLeft.classList.add('tentacle', 'middle', 'left');
+    tentacleMidMid.classList.add('tentacle', 'middle', 'mid');
+    tentacleMidRight.classList.add('tentacle', 'middle', 'right');
+    tentacleBotFullLeft.classList.add('tentacle', 'bottom', 'fullleft');
+    tentacleBotLeft.classList.add('tentacle', 'bottom', 'left');
+    tentacleBotRight.classList.add('tentacle', 'bottom', 'right');
+    tentacleBotFullRight.classList.add('tentacle', 'bottom', 'fullright');
+
+    squid.appendChild(nose);
+    squid.appendChild(eyebrow);
+    squid.appendChild(headbot);
+    squid.appendChild(headtop);
+    squid.appendChild(shoulderLeft);
+    squid.appendChild(shoulderRight);
+    squid.appendChild(mouth);
+    squid.appendChild(tentacleTopLeft);
+    squid.appendChild(tentacleTopRight);
+    squid.appendChild(tentacleMidLeft);
+    squid.appendChild(tentacleMidMid);
+    squid.appendChild(tentacleMidRight);
+    squid.appendChild(tentacleBotFullLeft);
+    squid.appendChild(tentacleBotLeft);
+    squid.appendChild(tentacleBotRight);
+    squid.appendChild(tentacleBotFullRight);
+
+    return squid;
 }
 
 function createTimer(){
@@ -215,8 +411,9 @@ function destroyShape(node){
     if (game.start){
         playAudio(sfx.boom);
         let shape = node.target.closest(".shape");
-        shape.style.width = "500px";
-        shape.style.height = "500px";
+        shape.style.transition = 'all 1s';
+        shape.style.width = "200px";
+        shape.style.height = "200px";
         shape.style.opacity = "0";
         shape.style.zIndex = "1";
         if(shape.classList.contains('bomb')){
@@ -351,9 +548,11 @@ function initGame(mode){
 
     for (var i = 0; i < game.mode.shapes; i++) {
         if(i < game.mode.bomb){
-            createShape(i, 'bomb');
+            createShape(i, 'ghost');
         }else{
-            createShape(i, 'coeur');
+            let shapes = ['invader', 'squid', 'meeple'];
+            let shape = shapes[random(0, shapes.length - 1)];
+            createShape(i, shape);
         }
     }
 
@@ -687,7 +886,7 @@ function saveScore(){
 }
 
 function setAttr(node){
-    let size = random(10,30);
+    let size = random(4,10);
 
     node.style.width = size+"px";
     node.style.height = size+"px";
@@ -699,11 +898,6 @@ function setAttr(node){
 
     let color = "rgb("+random(0,255)+", "+random(0,255)+", "+random(0,255)+")";
     node.style.backgroundColor = color;
-    if(node.classList.contains('crane')){
-        node.querySelectorAll('.dent').forEach(function(d){
-            d.style.backgroundColor = color;
-        });
-    }
 }
 
 function startGame(){
@@ -715,10 +909,6 @@ function startGame(){
         time --;
         startTimerText.textContent = time;
     }, 1000);
-
-    // setTimeout(function(){
-    //     interval.moveShape = setInterval(moveShape, 100);
-    // }, 1000);
 
     setTimeout(function(){
         clearInterval(decompte);

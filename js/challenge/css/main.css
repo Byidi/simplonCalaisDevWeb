@@ -274,104 +274,420 @@ body{
 
 /* SHAPES */
 
-	/* COEUR */
+	/* INVADER */
 
-.coeur{
-    transition: all 1s;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-	z-index: 100;
-}
-
-.coeur:after, .coeur:before{
-    content: '';
-    background-color: inherit;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    position: absolute;
-}
-
-.coeur:after{
-    left: 50%;
-}
-
-.coeur:before{
-    bottom: 50%;
-}
-
-	/* CRANE */
-.crane{
-	background-color: rgb(211, 235, 20);
-	width: 80px;
-	height: 80px;
-	border-radius: 45% 45% 30% 30%;
-	position: relative;
-	border: 1px solid black;
-}
-
-.crane .oeil{
-	background-color: rgb(0, 0, 0);
-	width: 30%;
-	height: 30%;
-	border-radius: 50%;
+.invader{
 	position: absolute;
-	top: 25%;
+	background-color: orange;
 }
 
-.crane .oeil.gauche{
-	left: 15%;
-}
-
-.crane .oeil.droit{
-	right: 15%;
-}
-
-.crane .nez{
-	background-color: rgb(0, 0, 0);
-	width: 12%;
-	height: 12%;
-	position: absolute;
-	top: 64%;
-	left: 43%;
-	transform: rotate(45deg);
-}
-
-.crane .nez:before, .crane .nez:after{
-	content: '';
-	background-color: inherit;
-	border-radius: 50%;
-	position: absolute;
+.invader div{
 	width: 100%;
 	height: 100%;
-}
-
-.crane .nez:before{
-	left: 50%;
-}
-
-.crane .nez:after{
-	top: 50%;
-}
-
-.crane .flexDent{
-	display: flex;
-	justify-content: space-between;
-	width: 60%;
-	height: 20%;
 	position: absolute;
-	top: 100%;
-	left: 20%;
+	background-color: inherit;
 }
 
-.crane .dent{
-	background-color: rgb(211, 235, 20);
-	width: 29%;
+.invader .nose{
+	width: 300%;
+	left: -100%;
+}
+
+.invader .eyebrow{
+	width: 500%;
+	top: -100%;
+	left: -200%;
+}
+
+.invader .mouth{
+	width: 500%;
+	height: 200%;
+	top: 100%;
+	left: -200%;
+}
+
+.invader .leg{
+	height: 600%;
+	top: -100%;
+}
+
+.invader .leg.left{
+	left: -300%;
+}
+
+.invader .leg.right{
+	right: -300%;
+}
+
+.invader .shoulder{
+	height: 200%;
+}
+
+.invader .shoulder.left{
+	left: -400%;
+}
+
+.invader .shoulder.right{
+	right: -400%;
+}
+
+.invader .arm{
+	height: 300%;
+	top: -200%;
+}
+
+.invader .arm.left{
+	left: -500%;
+}
+
+.invader .arm.right{
+	right: -500%;
+}
+
+.invader .foot{
+	top: 400%;
+}
+
+.invader .foot.left{
+	left: -400%;
+}
+
+.invader .foot.right{
+	right: -400%;
+}
+
+.invader .ear{}
+
+.invader .ear.bottom{
+	top: -200%;
+}
+
+.invader .ear.bottom.left{
+	left: -200%;
+}
+
+.invader .ear.bottom.right{
+	right: -200%;
+}
+
+.invader .ear.top{
+	top: -300%;
+}
+
+.invader .ear.top.left{
+	left: -300%;
+}
+
+.invader .ear.top.right{
+	right: -300%;
+}
+
+	/* GHOST */
+
+.ghost{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 70px;
+	left: 350px;
+	background-color: red;
+}
+
+.ghost div{
+	width: 100%;
 	height: 100%;
-	border-radius: 0% 0% 30% 30%;
-	border: 1px solid black;
-	border-top: 0px;
+	background-color: inherit;
+	position: absolute;
+}
+
+.ghost .nose{
+	width: 300%;
+	left: -100%;
+}
+
+.ghost .headbot{
+	width: 700%;
+	top: -100%;
+	left: -300%;
+}
+
+.ghost .headtop{
+	width: 500%;
+	top: -200%;
+	left: -200%;
+}
+
+.ghost .shoulder{
+	width: 200%;
+	top: 0%;
+}
+
+.ghost .shoulder.left{
+	left: -400%;
+}
+
+.ghost .shoulder.right{
+	right: -400%;
+}
+
+.ghost .body{
+	width: 900%;
+	height: 400%;
+	top: 100%;
+	left: -400%;
+}
+
+.ghost .foot{
+	top: 500%;
+}
+
+.ghost .foot.fullleft{
+	left: -400%;
+}
+
+.ghost .foot.left{
+	left: -200%;
+}
+
+.ghost .foot.middle{
+	left: 0%;
+}
+
+.ghost .foot.right{
+	right: -200%;
+}
+
+.ghost .foot.fullright{
+	right: -400%;
+}
+
+
+	/* SQUID */
+
+.squid{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 80px;
+	left: 550px;
+	background-color: blue;
+}
+
+.squid div{
+	width: 100%;
+	height: 100%;
+	background-color: inherit;
+	position: absolute;
+}
+
+.squid .nose{
+	width: 200%;
+	top: 0%;
+	left: 0%;
+}
+
+.squid .eyebrow{
+	width: 600%;
+	top: -100%;
+	left: -200%;
+}
+
+.squid .headbot{
+	width: 400%;
+	top: -200%;
+	left: -100%;
+}
+
+.squid .headtop{
+	width: 200%;
+	top: -300%;
+	left: 0%;
+}
+
+.squid .shoulder{
+	width: 200%;
+	top: 0%;
+}
+
+.squid .shoulder.left{
+	left: -300%;
+}
+
+.squid .shoulder.right{
+	right: -400%;
+}
+
+.squid .mouth{
+	width: 800%;
+	top: 100%;
+	left: -300%;
+}
+
+.squid .tentacle{}
+
+.squid .tentacle.top{
+	top: 200%;
+}
+
+.squid .tentacle.top.left{
+	left: -100%;
+}
+
+.squid .tentacle.top.right{
+	right: -200%;
+}
+
+.squid .tentacle.middle{
+	top: 300%;
+}
+
+.squid .tentacle.middle.left{
+	left: -200%;
+}
+
+.squid .tentacle.middle.mid{
+	width: 200%;
+	left: 0%;
+}
+
+.squid .tentacle.middle.right{
+	right: -300%;
+}
+
+.squid .tentacle.bottom{
+	top: 400%;
+}
+
+.squid .tentacle.bottom.fullleft{
+	left: -300%;
+}
+
+.squid .tentacle.bottom.left{
+	left: -100%;
+}
+
+.squid .tentacle.bottom.right{
+	right: -200%;
+}
+
+.squid .tentacle.bottom.fullright{
+	right: -400%;
+}
+
+	/* MEEPLE */
+
+.meeple{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 80px;
+	left: 750px;
+	background-color: pink;
+}
+
+.meeple div{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: inherit;
+}
+
+.meeple .nose{
+	top: 0%;
+	left: 0%;
+}
+
+.meeple .eyebrow{
+	width: 500%;
+	top: -100%;
+	left: -200%;
+}
+
+.meeple .ear.bottom{
+	top: -200%;
+}
+
+.meeple .ear.bottom.left{
+	left: -100%;
+}
+
+.meeple .ear.bottom.right{
+	right: -100%;
+}
+
+.meeple .ear.top{
+	top: -300%;
+}
+
+.meeple .ear.top.left{
+	left: -200%;
+}
+
+.meeple .ear.top.right{
+	right: -200%;
+}
+
+.meeple .shoulder{
+	width: 200%;
+}
+
+.meeple .shoulder.left{
+	left: -300%;
+}
+
+.meeple .shoulder.right{
+	right: -300%;
+}
+
+.meeple .mouth{
+	width: 700%;
+	top: 100%;
+	left: -300%;
+}
+
+.meeple .arm{
+	height: 300%;
+	top: 100%;
+}
+
+.meeple .arm.left{
+	left: -400%;
+}
+
+.meeple .arm.right{
+	right: -400%;
+}
+
+.meeple .body{
+	width: 500%;
+	height: 200%;
+	top: 200%;
+	left: -200%;
+}
+
+.meeple .leg{
+	height: 200%;
+	top: 400%;
+}
+
+.meeple .leg.left{
+	left: -100%;
+}
+
+.meeple .leg.right{
+	right: -100%;
+}
+
+.meeple .foot{
+	top: 500%;
+}
+
+.meeple .foot.left{
+	left: -200%;
+}
+
+.meeple .foot.right{
+	right: -200%;
 }
 
 	/* RAINBOW */
