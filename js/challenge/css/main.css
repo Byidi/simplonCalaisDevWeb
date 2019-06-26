@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+
 *{
 	margin: 0;
 	padding: 0;
 	box-sizing: content-box;
+	font-family: 'VT323', monospace;
 }
 
 body{
@@ -27,12 +30,10 @@ body{
 }
 
 #score{
-	font-family: 'Roboto';
 	font-size: 50px;
 }
 
 #timer{
-	font-family: 'Roboto';
 	font-size: 50px;
 }
 
