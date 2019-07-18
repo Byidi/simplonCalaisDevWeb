@@ -90,7 +90,7 @@ $users = array(
 	<?php
 	$jours = ["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
 	$mois = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"];
-	echo 'Nous somme le '.$jours[date('N')].' '.date('d').' '.$mois[date('n')].' '.date('Y').'<br/>';
+	echo 'Nous somme le '.$jours[date('N')-1].' '.date('d').' '.$mois[date('n')].' '.date('Y').'<br/>';
 
 	$noms = ['Iphigénie', 'Orphée', 'Artaban', 'Hildegarde', 'Sulliyan'];
 	foreach ($noms as $key => $value) {
