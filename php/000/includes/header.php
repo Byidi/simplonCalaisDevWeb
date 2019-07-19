@@ -6,3 +6,6 @@
         <title><?php echo $title; ?></title>
     </head>
     <body>
+        <?php
+        require_once('./includes/menu.php');
+        ?>

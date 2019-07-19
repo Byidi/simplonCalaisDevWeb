@@ -1,0 +1,218 @@
+/* GENERAL */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    outline: 0;
+}
+
+/* MENU */
+
+#menu{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+#menu .title{
+    position: relative;
+    height: 7vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 999;
+    background-color: red;
+}
+
+#menu .title .txt{
+    width: 100%;
+    height: 7vh;
+    margin-left: 20px;
+    font-size: 2.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu .title i{
+    margin-right: 20px;
+    padding: 5px;
+    border: 1px solid grey;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+#menu .link{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: -150px;
+    transition: 1s all;
+    background-color: white;
+    z-index: 800;
+}
+
+#menu .link a{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    text-decoration: none;
+    font-size: 1.5em;
+    color: black;
+    border-bottom: 1px solid black;
+}
+
+#menu .link a:hover{
+    background-color: black;
+    color: white;
+}
+
+#menu .link.show{
+    top: 50px;
+}
+
+/* CONTENT */
+
+#content{
+    position: relative;
+    z-index: 500;
+    background-color: blue;
+    width: 100vw;
+    min-height: 93vh;
+    margin-top: 7vh;
+    padding-top: 10px;
+}
+
+/* INDEX */
+
+#desc{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+#desc img{
+
+}
+
+/* GALLERY */
+
+#gallery{
+    position: relative;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#gallery .item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+/* POPUP */
+
+#popupBack{
+    position: absolute;
+    top: 7vh;
+    left: 0px;
+    width: 100vw;
+    height: 93vh;
+    z-index: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.67);
+}
+
+#popupBack .item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 90%;
+    height: 90%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 5px solid white;
+}
+
+/* CONTACT */
+
+#formContact{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#formContact input, #formContact textarea, #formContact div{
+    width: 80%;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 0px;
+    font-size: 1.4em;
+    padding: 5px;
+}
+
+#formContact input{
+    height: 4vh;
+    min-height: 1.5em;
+}
+
+#formContact textarea{
+    height: 200px;
+}
+
+#formContact div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#formContact button{
+    border: none;
+    background-color: white;
+    font-size: 1.2em;
+    width: 40%;
+    border-radius: 2px;
+    padding: 5px 0;
+    outline:none;
+    box-shadow: 3px 3px grey;
+}
+
+#formContact button:active{
+    box-shadow: 0px 0px grey;
+    outline:none;
+}

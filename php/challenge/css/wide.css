@@ -1,0 +1,32 @@
+#menu{
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#menu .title{
+    display: none;
+}
+
+#menu .link{
+    flex-direction: row;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 7vh;
+    background-color: orange;
+    transition: 0s all;
+}
+
+#menu .link a{
+    height: 100%;
+    border: none;
+    width: 20%;
+}
+
+#formContact input, #formContact textarea, #formContact div{
+    width: 60%;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 0px;
+    font-size: 1.4em;
+}
