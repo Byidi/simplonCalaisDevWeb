@@ -1,14 +1,27 @@
 /* jshint esversion: 9 */
 
-document.querySelector('#menu .title i').addEventListener('click', toggleBurger);
+if(document.querySelector('#desc .photo')){
+    let img = document.querySelector('#desc .photo').getAttribute('rel');
+    console.log(img);
+    document.querySelector('#desc .photo').style.backgroundImage = "url('./images/gallery/"+img+"')";
+    console.log("url('./images/gallery/'"+img+")");
 
-document.querySelectorAll('#gallery .item').forEach(function(item){
-    item.addEventListener('click', toggleImg);
-});
+}
 
-document.querySelector('#formContact #cancel').addEventListener('click', clearForm);
-
-document.querySelector('#formContact #send').addEventListener('click', checkForm);
+if(document.querySelector('#menu .title i')){
+    document.querySelector('#menu .title i').addEventListener('click', toggleBurger);
+}
+if(document.querySelector('#gallery .item')){
+    document.querySelectorAll('#gallery .item').forEach(function(item){
+        item.addEventListener('click', toggleImg);
+    });
+}
+if(document.querySelector('#formContact #cancel')){
+    document.querySelector('#formContact #cancel').addEventListener('click', clearForm);
+}
+if(document.querySelector('#formContact #send')){
+    document.querySelector('#formContact #send').addEventListener('click', checkForm);
+}
 
 hideBurger();
 
