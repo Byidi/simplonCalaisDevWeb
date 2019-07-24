@@ -7,6 +7,7 @@ session_start();
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.byidi.fr/burgerMenu/css/burger.css">
         <link rel="stylesheet" href="./css/main.css">
         <?php
         if(!empty($_SESSION['user'])){

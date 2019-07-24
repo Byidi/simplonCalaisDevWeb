@@ -20,7 +20,7 @@ if(!empty($_POST)){
 
 
 echo '
-<form action="./login.php" method="post">
+<form action="./login.php" method="post" id="login">
     <input type="text" name="name" placeholder="Nom" />
     <input type="password" name="pwd" placeholder="Mot de passe" />
     <button>Valider</button>

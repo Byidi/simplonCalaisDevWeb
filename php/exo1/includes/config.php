@@ -1,9 +1,9 @@
 <?php
 $config = [
     "links" => [
-        ["name" => "Accueil", "url"=> "./index.php", "condition" => ""],
-        ["name" => "Login", "url"=> "./login.php", "condition" => "unlog"],
-        ["name" => "Déconnexion", "url"=> "./logout.php", "condition" => "log"]
+        ["name" => "Accueil", "url"=> "./index.php", "logged" => -1],
+        ["name" => "Login", "url"=> "./login.php", "logged" => 0],
+        ["name" => "Déconnexion", "url"=> "./logout.php", "logged" => 1]
     ],
     "users" => [
         ["login" => "user1", "password" => "pwd1", "nom" => "Machin", "prenom" => "Truc", "theme" => 1],
